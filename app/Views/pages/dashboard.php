@@ -13,12 +13,12 @@
 								<div class="widget-data">
 									<div class="weight-700 font-24 text-dark">75</div>
 									<div class="font-14 text-secondary weight-500">
-										Appointment
+										Users
 									</div>
 								</div>
 								<div class="widget-icon">
 									<div class="icon" data-color="#00eccf">
-										<i class="icon-copy dw dw-calendar1"></i>
+										<i class="icon-copy dw dw-user1"></i>
 									</div>
 								</div>
 							</div>
@@ -28,14 +28,14 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">124,551</div>
+									<div class="weight-700 font-24 text-dark">100</div>
 									<div class="font-14 text-secondary weight-500">
-										Total Patient
+										Arsip
 									</div>
 								</div>
 								<div class="widget-icon">
 									<div class="icon" data-color="#ff5b5b">
-										<span class="icon-copy ti-heart"></span>
+										<span class="icon-copy bi bi-filetype-doc"></span>
 									</div>
 								</div>
 							</div>
@@ -45,15 +45,15 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">400+</div>
+									<div class="weight-700 font-24 text-dark">40</div>
 									<div class="font-14 text-secondary weight-500">
-										Total Doctor
+										Surat Masuk
 									</div>
 								</div>
 								<div class="widget-icon">
 									<div class="icon">
 										<i
-											class="icon-copy fa fa-stethoscope"
+											class="icon-copy bi bi-filetype-doc"
 											aria-hidden="true"
 										></i>
 									</div>
@@ -65,12 +65,12 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">$50,000</div>
-									<div class="font-14 text-secondary weight-500">Earning</div>
+									<div class="weight-700 font-24 text-dark">50</div>
+									<div class="font-14 text-secondary weight-500">Surat Keluar</div>
 								</div>
 								<div class="widget-icon">
 									<div class="icon" data-color="#09cc06">
-										<i class="icon-copy fa fa-money" aria-hidden="true"></i>
+										<i class="icon-copy bi bi-filetype-doc" aria-hidden="true"></i>
 									</div>
 								</div>
 							</div>
