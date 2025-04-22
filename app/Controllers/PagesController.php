@@ -16,6 +16,10 @@ class PagesController extends BaseController
     {
         return view('pages/surat-keluar');
     }
+    public function suratMasuk(): string
+    {
+        return view('pages/surat-masuk');
+    }
     public function pengguna(): string
     {
         return view('pages/pengguna');

@@ -9,7 +9,7 @@ use CodeIgniter\Router\RouteCollection;
 
 // admin
 $routes->group('admin', static function($routes) {
-    $routes->get('dashboard', 'PagesController::dashboard', ['as' => 'dashboard']);
+    $routes->get('dashboard', 'PagesController::dashboard', ['as' => 'admin']);
     $routes->get('surat-masuk', 'PagesController::suratMasuk', ['as' => 'suratMasuk']);
     $routes->get('surat-keluar', 'PagesController::suratKeluar', ['as' => 'suratKeluar']);
     $routes->get('disposisi', 'PagesController::disposisi', ['as' => 'disposisi']);
