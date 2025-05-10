@@ -4,22 +4,20 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class StatusLaporanModels extends Model
 {
-    protected $table            = 'users';
+    protected $table            = 'status_laporan';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username', 'email', 'namalengkap', 'role', 'password', 'is_active','handphone'];
+    protected $allowedFields    = ['id', 'nama_status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 
-    protected array $casts = [
-        'is_active' => 'boolean',
-    ];
+    protected array $casts = [];
     protected array $castHandlers = [];
 
     // Dates
@@ -37,7 +35,7 @@ class UserModel extends Model
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
+    protected $beforeInsert = [];
     protected $afterInsert    = [];
     protected $beforeUpdate   = [];
     protected $afterUpdate    = [];
@@ -45,9 +43,5 @@ class UserModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function getUserByUsername($username){
-        return $this->where('username', $username)->first();
-    }
 
 }

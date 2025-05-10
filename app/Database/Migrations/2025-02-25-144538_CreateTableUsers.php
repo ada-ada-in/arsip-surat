@@ -15,7 +15,7 @@ class CreateTableUsers extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'username'    => [
+            'name'    => [
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
                 'null'       => false,
@@ -30,20 +30,13 @@ class CreateTableUsers extends Migration
                 'constraint' => '255',
                 'null'       => false,
             ],
-            'namalengkap' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '100',
-                'null'       => false,
-            ],
             'handphone' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '15',
                 'null'       => false,
             ],
-            'role'        => [
-                'type'       => 'VARCHAR',
-                'constraint' => '10',
-                'default'    => 'user',
+            'role' => [
+                'type'  => 'ENUM', 'constraint' => ["admin", "user"]
             ],
             'is_active'   => [
                 'type'       => 'BOOLEAN',
