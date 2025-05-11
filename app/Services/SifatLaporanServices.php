@@ -14,7 +14,7 @@ class SifatLaporanServices {
     public function addSifatLaporanServices(array $data)
     {
         $rules = [
-            'nama_sifat' => [
+            'nama_sifat_laporan' => [
                 'label' => 'Nama Sifat',
                 'rules' => 'required'
             ]
@@ -31,7 +31,7 @@ class SifatLaporanServices {
         }
 
         $this->sifatLaporanModel->insert([
-            'nama_sifat' => $data['nama_sifat']
+            'nama_sifat_laporan' => $data['nama_sifat_laporan']
         ]);
 
         return [
@@ -124,7 +124,7 @@ class SifatLaporanServices {
         }
 
         $rules = [
-            'nama_sifat' => [
+            'nama_sifat_laporan' => [
                 'label' => 'Nama Sifat',
                 'rules' => 'required'
             ]
@@ -141,7 +141,7 @@ class SifatLaporanServices {
         }
 
         $updateData = [
-            'nama_sifat' => $data['nama_sifat'] ?? $existingData['nama_sifat'],
+            'nama_sifat_laporan' => $data['nama_sifat_laporan'] ?? $existingData['nama_sifat'],
         ];
 
         $this->sifatLaporanModel->update($id, $updateData);

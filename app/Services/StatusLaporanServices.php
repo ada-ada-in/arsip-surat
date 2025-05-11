@@ -14,7 +14,7 @@ class StatusLaporanServices {
     public function addStatusLaporanServices(array $data)
     {
         $rules = [
-            'nama_status' => [
+            'nama_status_laporan' => [
                 'label' => 'Nama Status',
                 'rules' => 'required'
             ]
@@ -31,7 +31,7 @@ class StatusLaporanServices {
         }
 
         $this->statusLaporanModel->insert([
-            'nama_status' => $data['nama_status']
+            'nama_status_laporan' => $data['nama_status_laporan']
         ]);
 
         return [
@@ -124,7 +124,7 @@ class StatusLaporanServices {
         }
 
         $rules = [
-            'nama_status' => [
+            'nama_status_laporan' => [
                 'label' => 'Nama Status',
                 'rules' => 'required'
             ]
@@ -141,7 +141,7 @@ class StatusLaporanServices {
         }
 
         $updateData = [
-            'nama_status' => $data['nama_status'] ?? $existingData['nama_status'],
+            'nama_status_laporan' => $data['nama_status_laporan'] ?? $existingData['nama_status_laporan'],
         ];
 
         $this->statusLaporanModel->update($id, $updateData);

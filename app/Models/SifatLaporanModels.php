@@ -12,7 +12,7 @@ class SifatLaporanModels extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'nama_sifat'];
+    protected $allowedFields    = ['id', 'nama_sifat_laporan'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

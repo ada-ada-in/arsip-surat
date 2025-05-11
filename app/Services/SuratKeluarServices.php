@@ -1,14 +1,14 @@
 <?php
 namespace App\Services;
 
-use App\Models\SuratKeluarkModels;
+use App\Models\SuratKeluarModels;
 
 class SuratKeluarServices {
     protected $suratKeluarModel;
 
     public function __construct()
     {
-        $this->suratKeluarModel = new SuratKeluarkModels();
+        $this->suratKeluarModel = new SuratKeluarModels();
     }
 
     public function addSuratKeluarServices(array $data)
@@ -21,10 +21,6 @@ class SuratKeluarServices {
             'tanggal_surat' => [
                 'label' => 'Tanggal Surat',
                 'rules' => 'required|valid_date'
-            ],
-            'tujuan' => [
-                'label' => 'Tujuan',
-                'rules' => 'required'
             ],
             'perihal' => [
                 'label' => 'Perihal',
@@ -145,10 +141,6 @@ class SuratKeluarServices {
             'tanggal_surat' => [
                 'label' => 'Tanggal Surat',
                 'rules' => 'required|valid_date'
-            ],
-            'tujuan' => [
-                'label' => 'Tujuan',
-                'rules' => 'required'
             ],
             'perihal' => [
                 'label' => 'Perihal',

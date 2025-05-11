@@ -28,7 +28,7 @@ class SuratMasukServices {
             ],
             'lampiran' => [
                 'label' => 'Lampiran',
-                'rules' => 'required|valid_date'
+                'rules' => 'required'
             ],
             'dibuat_oleh' => [
                 'label' => 'Dibuat Oleh',
@@ -152,7 +152,7 @@ class SuratMasukServices {
             ],
             'lampiran' => [
                 'label' => 'Lampiran',
-                'rules' => 'required|valid_date'
+                'rules' => 'required'
             ],
             'dibuat_oleh' => [
                 'label' => 'Dibuat Oleh',

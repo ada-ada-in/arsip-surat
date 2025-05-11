@@ -15,7 +15,7 @@ class JenisLaporanServices {
     public function addJenisLaporanServices(array $data)
     {
         $rules = [
-            'nama_jenis' => [
+            'nama_jenis_laporan' => [
                 'label' => 'Nama Jenis',
                 'rules' => 'required'
             ]
@@ -32,7 +32,7 @@ class JenisLaporanServices {
         }
 
         $this->jenisLaporanModel->insert([
-            'nama_jenis' => $data['nama_jenis']
+            'nama_jenis_laporan' => $data['nama_jenis_laporan']
         ]);
 
         return [
@@ -125,7 +125,7 @@ class JenisLaporanServices {
         }
 
         $rules = [
-            'nama_jenis' => [
+            'nama_jenis_laporan' => [
                 'label' => 'Nama Jenis',
                 'rules' => 'required'
             ]
@@ -142,7 +142,7 @@ class JenisLaporanServices {
         }
 
         $updateData = [
-            'nama_jenis' => $data['nama_jenis'] ?? $existingData['nama_jenis'],
+            'nama_jenis_laporan' => $data['nama_jenis_laporan'] ?? $existingData['nama_jenis'],
         ];
 
         $this->jenisLaporanModel->update($id, $updateData);

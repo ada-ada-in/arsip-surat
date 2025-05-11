@@ -32,7 +32,8 @@ class UserServices {
             ],
             'role' => [
                 'label' => 'Role',
-                'rules' => 'required|in_list[super_admin,admin,user]'
+                'rules' => 'required|in_list[super_admin,admin,user]',
+                'default' => 'user'
             ],
             'handphone' => [
                 'label' => 'Handphone',
@@ -130,72 +131,76 @@ class UserServices {
         ];
     }
 
-    public function updateUserByIdServices($id, array $data)
-    {
-        if (!$id) {
-            return [
-                'status' => false,
-                'message' => 'ID is required'
-            ];
-        }
-
-        $existingData = $this->userModel->find($id);
-        if (!$existingData) {
-            return [
-                'status' => false,
-                'message' => 'User tidak ditemukan'
-            ];
-        }
-
-        $rules = [
-            'name' => [
-                'label' => 'Name',
-                'rules' => 'required|is_unique[users.name,id,{id}]'
-            ],
-            'email' => [
-                'label' => 'Email',
-                'rules' => 'required|valid_email|is_unique[users.email,id,{id}]'
-            ],
-            'handphone' => [
-                'label' => 'Handphone',
-                'rules' => 'required|is_unique[users.handphone,id,{id}]'
-            ],
-            'role' => [
-                'label' => 'Role',
-                'rules' => 'required|in_list[super_admin,admin,user]'
-            ]
-        ];
-
-        if (isset($data['password']) && !empty($data['password'])) {
-            $rules['password'] = [
-                'label' => 'Password',
-                'rules' => 'min_length[6]'
-            ];
-            $rules['confirm_password'] = [
-                'label' => 'Confirm Password',
-                'rules' => 'required|matches[password]'
-            ];
-            $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
-            unset($data['confirm_password']);
-        }
-
-        $validation = \Config\Services::validation();
-        $validation->setRules($rules);
-
-        if (!$validation->run($data)) {
-            return [
-                'status' => false,
-                'errors' => $validation->getErrors()
-            ];
-        }
-
-        $this->userModel->update($id, $data);
-
-        $updatedData = $this->userModel->find($id);
-
+public function updateUserByIdServices($id, array $data)
+{
+    if (!$id) {
         return [
-            'status' => true,
-            'data' => $updatedData
+            'status' => false,
+            'message' => 'ID is required'
         ];
     }
+
+    $existingData = $this->userModel->find($id);
+    if (!$existingData) {
+        return [
+            'status' => false,
+            'message' => 'User tidak ditemukan'
+        ];
+    }
+
+    $rules = [
+        'name' => [
+            'label' => 'Name',
+            'rules' => 'required|is_unique[users.name,id,' . $id . ']'
+        ],
+        'email' => [
+            'label' => 'Email',
+            'rules' => 'required|valid_email|is_unique[users.email,id,' . $id . ']'
+        ],
+        'handphone' => [
+            'label' => 'Handphone',
+            'rules' => 'required|is_unique[users.handphone,id,' . $id . ']'
+        ],
+        'role' => [
+            'label' => 'Role',
+            'rules' => 'required|in_list[super_admin,admin,user]'
+        ]
+    ];
+
+    if (!empty($data['password'])) {
+        $rules['password'] = [
+            'label' => 'Password',
+            'rules' => 'min_length[6]'
+        ];
+        $rules['confirm_password'] = [
+            'label' => 'Confirm Password',
+            'rules' => 'matches[password]'
+        ];
+    }
+
+    $validation = \Config\Services::validation();
+    $validation->setRules($rules);
+
+    if (!$validation->run($data)) {
+        return [
+            'status' => false,
+            'errors' => $validation->getErrors()
+        ];
+    }
+
+    // Hash password and remove confirm_password
+    if (!empty($data['password'])) {
+        $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        unset($data['confirm_password']);
+    }
+
+    $this->userModel->update($id, $data);
+    $updatedData = $this->userModel->find($id);
+
+    return [
+        'status' => true,
+        'data' => $updatedData
+    ];
+}
+
 }

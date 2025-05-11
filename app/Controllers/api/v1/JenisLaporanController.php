@@ -3,7 +3,7 @@ namespace App\Controllers\Api\V1;
 use CodeIgniter\RESTful\ResourceController;
 use App\Services\JenisLaporanServices;
 
-class CartItemsController extends ResourceController {
+class JenisLaporanController extends ResourceController {
 
     protected $jenisLaporanServices;
 
@@ -44,7 +44,7 @@ class CartItemsController extends ResourceController {
         }
     }
 
-    public function delteJenisLaporan($id){
+    public function deleteJenisLaporan($id){
         try {
     
             $deletedData = $this->jenisLaporanServices->deleteDataJenisLaporanByIdServices($id);

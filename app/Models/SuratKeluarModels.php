@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class SuratKeluarkModels extends Model
+class SuratKeluarModels extends Model
 {
     protected $table            = 'surat_keluar';
     protected $primaryKey       = 'id';
@@ -12,7 +12,7 @@ class SuratKeluarkModels extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'id_user', 'id_jenis', 'id_sifat', 'id_status', 'id_disposisi_kepada', 'id_disposisi_petunjuk', 'perihal', 'nomor_surat', 'tanggal_surat', 'tanggal_diterima'];
+    protected $allowedFields    = ['id', 'id_user', 'id_jenis', 'id_sifat', 'id_status', 'id_disposisi_kepada', 'id_disposisi_petunjuk', 'perihal', 'nomor_surat', 'tanggal_surat', 'tanggal_diterima', 'lampiran'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
