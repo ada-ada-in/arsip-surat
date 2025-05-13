@@ -4,9 +4,9 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateTabelSuratKeluar extends Migration
+class CreateTabelSurat extends Migration
 {
-     public function up()
+    public function up()
     {
         $this->forge->addField([
             'id'          => [
@@ -43,13 +43,13 @@ class CreateTabelSuratKeluar extends Migration
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'   => true,
-                'null'       => false,
+                'null'       => true,
             ],
             'id_disposisi_petunjuk'    => [
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'   => true,
-                'null'       => false,
+                'null'       => true,
             ],
             'perihal'    => [
                 'type'       => 'VARCHAR',
@@ -61,18 +61,33 @@ class CreateTabelSuratKeluar extends Migration
                 'constraint' => '100',
                 'null'       => false,
             ],
-            'tanggal_surat'       => [
+            'nomor_agenda'       => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null'       => false,
+            ],
+            'tanggal_diterima'       => [
                 'type'       => 'DATETIME',
                 'null'       => false,
+            ],
+            'is_completed'       => [
+                'type'       => 'ENUM',
+                'constraint' => ['0', '1'],
+                'default'    => '0',
             ],
             'lampiran'       => [
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
                 'null'       => false,
             ],
-            'dibuat_oleh'       => [
+            'dari'       => [
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
+                'null'       => false,
+            ],
+            'tipe_surat'       => [
+                'type'       => 'ENUM',
+                'constraint' => ['masuk', 'keluar'],
                 'null'       => false,
             ],
             'created_at'  => [
@@ -92,11 +107,11 @@ class CreateTabelSuratKeluar extends Migration
         $this->forge->addForeignKey('id_status', 'status_laporan', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_disposisi_kepada', 'disposisi_kepada', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_disposisi_petunjuk', 'disposisi_petunjuk', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('surat_keluar');
+        $this->forge->createTable('surat');
     }
 
     public function down()
     {
-        $this->forge->dropTable('surat_keluar');
+        $this->forge->dropTable('surat');
     }
 }

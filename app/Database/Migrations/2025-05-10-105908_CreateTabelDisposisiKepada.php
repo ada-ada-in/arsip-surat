@@ -15,6 +15,16 @@ class CreateTabelDisposisiKepada extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
+            'nama_kordinator'    => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null'       => false,
+            ],
+            'nip'    => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null'       => false,
+            ],
             'nama_disposisi_kepada'    => [
                 'type'       => 'VARCHAR',
                 'constraint' => '100',

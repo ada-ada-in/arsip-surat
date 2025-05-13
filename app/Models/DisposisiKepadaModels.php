@@ -12,7 +12,7 @@ class DisposisiKepadaModels extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'nama_disposisi_kepada'];
+    protected $allowedFields    = ['id', 'nama_disposisi_kepada', 'nama_kordinator', 'nip'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

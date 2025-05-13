@@ -68,7 +68,7 @@ class JenisLaporanServices {
 
     public function getJenisLaporanDataServices()
     {
-        $data = $this->jenisLaporanModel->findAll();
+        $data = $this->jenisLaporanModel->orderBy('created_at', 'DESC')->findAll();
 
         if (empty($data)) {
             return [

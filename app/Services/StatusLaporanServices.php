@@ -67,7 +67,7 @@ class StatusLaporanServices {
 
     public function getStatusLaporanDataServices()
     {
-        $data = $this->statusLaporanModel->findAll();
+        $data = $this->statusLaporanModel->orderBy('created_at', 'DESC')->findAll();
 
         if (empty($data)) {
             return [

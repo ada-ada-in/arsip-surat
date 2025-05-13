@@ -36,6 +36,26 @@ class PagesController extends BaseController
     {
         return view('pages/profile');
     }
+    public function disposisikepada(): string 
+    {
+        return view('pages/disposisikepada');
+    }
+    public function disposisipetunjuk(): string 
+    {
+        return view('pages/disposisipetunjuk');
+    }
+    public function jenissurat(): string 
+    {
+        return view('pages/jenissurat');
+    }
+    public function sifatsurat(): string 
+    {
+        return view('pages/sifatsurat');
+    }
+    public function statussurat(): string 
+    {
+        return view('pages/statussurat');
+    }
 
 
     // auth

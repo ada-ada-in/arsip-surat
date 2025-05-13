@@ -67,7 +67,7 @@ class DisposisiPetunjukServices {
 
     public function getDisposisiPetunjukDataServices()
     {
-        $data = $this->disposisiPetunjukModel->findAll();
+        $data = $this->disposisiPetunjukModel->orderBy('created_at', 'DESC')->findAll();
 
         if (empty($data)) {
             return [

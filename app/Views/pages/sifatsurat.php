@@ -7,15 +7,15 @@
             <div class="row d-flex justify-content-between">
                 <div class="col-md-6 col-sm-12">
                     <div class="title">
-                        <h4>Data Surat Keluar</h4>
+                        <h4>Data Sifat Surat</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="<?= url_to('admin') ?>">Surat</a>
+                                <a href="<?= url_to('admin') ?>">Filter Surat</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Surat Keluar
+                                Sifat Surat
                             </li>
                         </ol>
                     </nav>
@@ -35,11 +35,11 @@
                     <thead>
                         <tr>
                             <th class="table-plus datatable-nosort">No.</th>
-                            <th>Nama Jenis</th>
+                            <th>Nama Sifat</th>
                             <th class="datatable-nosort">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="data-jenis">
+                    <tbody id="data-sifat">
                         <!-- dynamic rows go here -->
                     </tbody>
                 </table>
@@ -49,8 +49,8 @@
     </div>
 </div>
 
-<?= view('components/modals/jenis-surat/add-modal') ?>
-<?= view('components/modals/jenis-surat/edit-modal') ?>
+<?= view('components/modals/sifat-surat/add-modal') ?>
+<?= view('components/modals/sifat-surat/edit-modal') ?>
 
 <script>
     $(function () {
@@ -68,7 +68,7 @@
                 row += `
                     <tr>
                         <td class="table-plus">${start + i + 1}</td>
-                        <td>${item.nama_jenis_laporan}</td>
+                        <td>${item.nama_sifat_laporan}</td>
                         <td>
                             <div class="dropdown">
                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -77,7 +77,7 @@
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                     <button type="button" class="dropdown-item btn-edit" data-toggle="modal" data-target="#editmodal"
                                         data-id="${item.id}"
-                                        data-name="${item.nama_jenis_laporan}">
+                                        data-name="${item.nama_sifat_laporan}">
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
                                     <button class="dropdown-item btn-delete" data-id="${item.id}">
@@ -90,7 +90,7 @@
                 `;
             });
 
-            $('#data-jenis').html(row);
+            $('#data-sifat').html(row);
             $('#pageInfo').text(`Page ${currentPage} of ${Math.ceil(data.length / rowsPerPage)}`);
         }
 
@@ -121,7 +121,7 @@
 
         function loadData() {
             $.ajax({
-                url: '/api/v1/jenis-laporan',
+                url: '/api/v1/sifat-laporan',
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
@@ -152,12 +152,12 @@
 
             const form = this;
             const formData = {
-                nama_jenis_laporan: $(form).find('input[name="nama_jenis_laporan"]').val()
+                nama_sifat_laporan: $(form).find('input[name="nama_sifat_laporan"]').val()
             };
 
 
             $.ajax({
-                url: `/api/v1/jenis-laporan`,
+                url: `/api/v1/sifat-laporan`,
                 type: 'POST',
                 dataType: 'json',
                 data: JSON.stringify(formData),
@@ -195,12 +195,12 @@
 
         $(document).on('click', '.btn-delete', function () {
             const id = $(this).data('id');
-            if (confirm('Apakah kamu yakin ingin menghapus jenis laporan ini?')) {
+            if (confirm('Apakah kamu yakin ingin menghapus sifat laporan ini?')) {
                 $.ajax({
-                    url: `/api/v1/jenis-laporan/${id}`,
+                    url: `/api/v1/sifat-laporan/${id}`,
                     type: 'DELETE',
                     success: function () {
-                        alert('Jenis laporan berhasil dihapus!');
+                        alert('sifat laporan berhasil dihapus!');
                         loadData(); 
                     },
                     error: function (xhr, status, error) {
@@ -234,7 +234,7 @@
         $(document).on('click', '.btn-edit', function () {
             const button = $(this);
             $('#editmodal input[name="id"]').val(button.data('id'));
-            $('#editmodal input[name="nama_jenis_laporan"]').val(button.data('name'));
+            $('#editmodal input[name="nama_sifat_laporan"]').val(button.data('name'));
         });
 
         $('#form-edit').on('submit', function (e) {
@@ -243,11 +243,11 @@
     const form = this;
     const id = $(form).find('input[name="id"]').val();
     const formData = {
-        nama_jenis_laporan: $(form).find('input[name="nama_jenis_laporan"]').val()
+        nama_sifat_laporan: $(form).find('input[name="nama_sifat_laporan"]').val()
     };
 
     $.ajax({
-            url: `/api/v1/jenis-laporan/${id}`,
+            url: `/api/v1/sifat-laporan/${id}`,
             type: 'PUT',
             dataType: 'json',
             data: JSON.stringify(formData),
@@ -283,7 +283,7 @@
     $('#searchinput').on('input', function () {
         const keyword = $(this).val().toLowerCase();
         const filtered = filteredData.filter(item =>
-            item.nama_jenis_laporan.toLowerCase().includes(keyword)
+            item.nama_sifat_laporan.toLowerCase().includes(keyword)
         );
 
         currentPage = 1; // reset to first page

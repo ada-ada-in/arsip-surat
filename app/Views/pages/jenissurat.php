@@ -7,15 +7,15 @@
             <div class="row d-flex justify-content-between">
                 <div class="col-md-6 col-sm-12">
                     <div class="title">
-                        <h4>Data Surat Keluar</h4>
+                        <h4>Data Jenis Surat</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="<?= url_to('admin') ?>">Surat</a>
+                                <a href="<?= url_to('admin') ?>">Filter Surat</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Surat Keluar
+                                Jenis Surat
                             </li>
                         </ol>
                     </nav>

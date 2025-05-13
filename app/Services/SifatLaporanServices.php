@@ -67,7 +67,7 @@ class SifatLaporanServices {
 
     public function getSifatLaporanDataServices()
     {
-        $data = $this->sifatLaporanModel->findAll();
+        $data = $this->sifatLaporanModel->orderBy('created_at', 'DESC')->findAll();
 
         if (empty($data)) {
             return [

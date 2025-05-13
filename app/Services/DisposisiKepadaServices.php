@@ -17,7 +17,15 @@ class DisposisiKepadaServices {
             'nama_disposisi_kepada' => [
                 'label' => 'Nama Disposisi',
                 'rules' => 'required'
-            ]
+            ],
+            'nama_kordinator' => [
+                'label' => 'Nama Kordinator',
+                'rules' => 'required'
+            ],
+            'nip' => [
+                'label' => 'NIP',
+                'rules' => 'required'
+            ],
         ];
 
         $validation = \Config\Services::validation();
@@ -31,7 +39,9 @@ class DisposisiKepadaServices {
         }
 
         $this->disposisiKepadaModel->insert([
-            'nama_disposisi_kepada' => $data['nama_disposisi_kepada']
+            'nama_disposisi_kepada' => $data['nama_disposisi_kepada'],
+            'nama_kordinator' => $data['nama_kordinator'],
+            'nip' => $data['nip']
         ]);
 
         return [
@@ -67,7 +77,7 @@ class DisposisiKepadaServices {
 
     public function getDisposisiKepadaDataServices()
     {
-        $data = $this->disposisiKepadaModel->findAll();
+        $data = $this->disposisiKepadaModel->orderBy('created_at', 'DESC')->findAll();
 
         if (empty($data)) {
             return [
@@ -127,6 +137,14 @@ class DisposisiKepadaServices {
             'nama_disposisi_kepada' => [
                 'label' => 'Nama Disposisi',
                 'rules' => 'required'
+            ],
+            'nama_kordinator' => [
+                'label' => 'Nama Kordinator',
+                'rules' => 'required'
+            ],
+            'nip' => [
+                'label' => 'NIP',
+                'rules' => 'required'
             ]
         ];
 
@@ -142,6 +160,8 @@ class DisposisiKepadaServices {
 
         $updateData = [
             'nama_disposisi_kepada' => $data['nama_disposisi_kepada'] ?? $existingData['nama_disposisi_kepada'],
+            'nama_kordinator' => $data['nama_kordinator'] ?? $existingData['nama_kordinator'],
+            'nip' => $data['nip'] ?? $existingData['nip']
         ];
 
         $this->disposisiKepadaModel->update($id, $updateData);

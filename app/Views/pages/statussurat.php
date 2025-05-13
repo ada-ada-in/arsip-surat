@@ -7,15 +7,15 @@
             <div class="row d-flex justify-content-between">
                 <div class="col-md-6 col-sm-12">
                     <div class="title">
-                        <h4>Data Surat Keluar</h4>
+                        <h4>Data Status Surat</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="<?= url_to('admin') ?>">Surat</a>
+                                <a href="<?= url_to('admin') ?>">Fiilter Surat</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Surat Keluar
+                                Status Surat
                             </li>
                         </ol>
                     </nav>
@@ -24,7 +24,7 @@
                     <div class="form-group">
                         <input class="form-control" id="searchinput" placeholder="Cari....." type="text" />
                     </div>
-										<button class="btn btn-primary " data-toggle="modal" data-target="#addmodal" >+</button>
+										<button class="btn btn-primary " data-toggle="modal" data-target="#addstatusmodal" >+</button>
                 </div>
             </div>
         </div>
@@ -35,22 +35,22 @@
                     <thead>
                         <tr>
                             <th class="table-plus datatable-nosort">No.</th>
-                            <th>Nama Jenis</th>
+                            <th>Nama Status</th>
                             <th class="datatable-nosort">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="data-jenis">
+                    <tbody id="data-status">
                         <!-- dynamic rows go here -->
                     </tbody>
-                </table>
+                </table>    
                 <div id="pageInfo" class="mt-2 text-center text-muted"></div>
             </div>
         </div>
     </div>
 </div>
 
-<?= view('components/modals/jenis-surat/add-modal') ?>
-<?= view('components/modals/jenis-surat/edit-modal') ?>
+<?= view('components/modals/status-surat/add-modal') ?>
+<?= view('components/modals/status-surat/edit-modal') ?>
 
 <script>
     $(function () {
@@ -68,16 +68,16 @@
                 row += `
                     <tr>
                         <td class="table-plus">${start + i + 1}</td>
-                        <td>${item.nama_jenis_laporan}</td>
+                        <td>${item.nama_status_laporan}</td>
                         <td>
                             <div class="dropdown">
                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <button type="button" class="dropdown-item btn-edit" data-toggle="modal" data-target="#editmodal"
+                                    <button type="button" class="dropdown-item btn-edit" data-toggle="modal" data-target="#editstatusmodal"
                                         data-id="${item.id}"
-                                        data-name="${item.nama_jenis_laporan}">
+                                        data-name="${item.nama_status_laporan}">
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
                                     <button class="dropdown-item btn-delete" data-id="${item.id}">
@@ -90,7 +90,7 @@
                 `;
             });
 
-            $('#data-jenis').html(row);
+            $('#data-status').html(row);
             $('#pageInfo').text(`Page ${currentPage} of ${Math.ceil(data.length / rowsPerPage)}`);
         }
 
@@ -121,18 +121,11 @@
 
         function loadData() {
             $.ajax({
-                url: '/api/v1/jenis-laporan',
+                url: '/api/v1/status-laporan',
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
-                        let data = response.data.data;
-
-                        if (!Array.isArray(data)) {
-                            data = [data]; 
-                        }
-
-                    filteredData = data;
-                    console.log(filteredData);
+                    filteredData = response.data;
                     displayTable(filteredData);
                     displayPagination(filteredData.length);
                 },
@@ -147,17 +140,17 @@
 
         // POST Data
 
-        $('#form-add').on('submit', function (e) {
+        $('#form-add-status').on('submit', function (e) {
             e.preventDefault();
 
             const form = this;
             const formData = {
-                nama_jenis_laporan: $(form).find('input[name="nama_jenis_laporan"]').val()
+                nama_status_laporan: $(form).find('input[name="nama_status_laporan"]').val()
             };
 
 
             $.ajax({
-                url: `/api/v1/jenis-laporan`,
+                url: `/api/v1/status-laporan`,
                 type: 'POST',
                 dataType: 'json',
                 data: JSON.stringify(formData),
@@ -165,9 +158,9 @@
                 contentType: 'application/json',
                 success: function (response) {
                     alert(response.message);
-                    $('#form-add')[0].reset();
+                    $('#form-add-status')[0].reset();
                     loadData();
-                    $('#addmodal').modal('hide');
+                    $('#addstatusmodal').modal('hide');
                 },
                 error: function (xhr, status, error) {
                     try {
@@ -195,12 +188,12 @@
 
         $(document).on('click', '.btn-delete', function () {
             const id = $(this).data('id');
-            if (confirm('Apakah kamu yakin ingin menghapus jenis laporan ini?')) {
+            if (confirm('Apakah kamu yakin ingin menghapus status ini?')) {
                 $.ajax({
-                    url: `/api/v1/jenis-laporan/${id}`,
+                    url: `/api/v1/status-laporan/${id}`,
                     type: 'DELETE',
                     success: function () {
-                        alert('Jenis laporan berhasil dihapus!');
+                        alert('status berhasil dihapus!');
                         loadData(); 
                     },
                     error: function (xhr, status, error) {
@@ -233,21 +226,21 @@
 
         $(document).on('click', '.btn-edit', function () {
             const button = $(this);
-            $('#editmodal input[name="id"]').val(button.data('id'));
-            $('#editmodal input[name="nama_jenis_laporan"]').val(button.data('name'));
+            $('#editstatusmodal input[name="id"]').val(button.data('id'));
+            $('#editstatusmodal input[name="nama_status_laporan"]').val(button.data('name'));
         });
 
-        $('#form-edit').on('submit', function (e) {
+        $('#form-edit-status').on('submit', function (e) {
     e.preventDefault();
 
     const form = this;
     const id = $(form).find('input[name="id"]').val();
     const formData = {
-        nama_jenis_laporan: $(form).find('input[name="nama_jenis_laporan"]').val()
+        nama_status_laporan: $(form).find('input[name="nama_status_laporan"]').val(),
     };
 
     $.ajax({
-            url: `/api/v1/jenis-laporan/${id}`,
+            url: `/api/v1/status-laporan/${id}`,
             type: 'PUT',
             dataType: 'json',
             data: JSON.stringify(formData),
@@ -255,7 +248,7 @@
             contentType: 'application/json',
             success: function (response) {
                 alert(response.message);
-                $('#editmodal').modal('hide');
+                $('#editstatusmodal').modal('hide');
                 loadData();
             },
             error: function (xhr) {
@@ -283,7 +276,7 @@
     $('#searchinput').on('input', function () {
         const keyword = $(this).val().toLowerCase();
         const filtered = filteredData.filter(item =>
-            item.nama_jenis_laporan.toLowerCase().includes(keyword)
+            item.nama_status_laporan.toLowerCase().includes(keyword)
         );
 
         currentPage = 1; // reset to first page

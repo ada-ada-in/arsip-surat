@@ -26,6 +26,7 @@
     		
     
   <?= view('components/include/footer') ?>
+  
 
   <?= $this->rendersection('script') ?>
 	</body>

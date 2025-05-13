@@ -3,18 +3,18 @@
 namespace App\Controllers\Api\V1;
 
 use CodeIgniter\RESTful\ResourceController;
-use App\Services\SuratKeluarServices;
+use App\Services\SuratServices;
 
-class SuratKeluarController extends ResourceController
+class SuratController extends ResourceController
 {
-    protected $suratKeluarServices;
+    protected $suratServices;
 
     public function __construct()
     {
-        $this->suratKeluarServices = new SuratKeluarServices();
+        $this->suratServices = new suratServices();
     }
 
-    public function addSuratKeluar()
+    public function addSurat()
     {
         try {
             $data = $this->request->getJSON(true);
@@ -26,7 +26,7 @@ class SuratKeluarController extends ResourceController
                 ], 400);
             }
 
-            $result = $this->suratKeluarServices->addSuratKeluarServices($data);
+            $result = $this->suratServices->addsuratServices($data);
 
             if (!$result['status']) {
                 return $this->fail($result['errors'], 400);
@@ -41,10 +41,10 @@ class SuratKeluarController extends ResourceController
         }
     }
 
-    public function deleteSuratKeluar($id)
+    public function deleteSurat($id)
     {
         try {
-            $result = $this->suratKeluarServices->deleteDataSuratKeluarByIdServices($id);
+            $result = $this->suratServices->deleteDataSuratByIdServices($id);
 
             if (!$result['status']) {
                 return $this->fail($result['message'], 404);
@@ -59,10 +59,10 @@ class SuratKeluarController extends ResourceController
         }
     }
 
-    public function getSuratKeluarData()
+    public function getSuratData()
     {
         try {
-            $result = $this->suratKeluarServices->getSuratKeluarDataServices();
+            $result = $this->suratServices->getSuratDataServices();
 
             return $this->respond([
                 'status' => true,
@@ -74,10 +74,40 @@ class SuratKeluarController extends ResourceController
         }
     }
 
-    public function getSuratKeluarById($id)
+    public function getSuratMasukData()
     {
         try {
-            $result = $this->suratKeluarServices->getDataSuratKeluarByIdServices($id);
+            $result = $this->suratServices->getSuratMasukDataServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
+        public function getSuratKeluarData()
+    {
+        try {
+            $result = $this->suratServices->getSuratKeluarkDataServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
+    public function getSuratById($id)
+    {
+        try {
+            $result = $this->suratServices->getDataSuratByIdServices($id);
 
             if (!$result['status']) {
                 return $this->fail($result['message'], 404);
@@ -93,7 +123,9 @@ class SuratKeluarController extends ResourceController
         }
     }
 
-    public function updateSuratKeluarById($id)
+
+
+    public function updateSuratById($id)
     {
         try {
             $data = $this->request->getJSON(true);
@@ -105,7 +137,7 @@ class SuratKeluarController extends ResourceController
                 ], 400);
             }
 
-            $result = $this->suratKeluarServices->updateDataBySuratKeluarIdServices($id, $data);
+            $result = $this->suratServices->updateDataBySuratIdServices($id, $data);
 
             if (!$result['status']) {
                 return $this->fail($result['errors'], 400);

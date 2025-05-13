@@ -1,9 +1,9 @@
 <div class="left-side-bar">
 			<div class="brand-logo">
 				<a href="<?= url_to('admin') ?>">
-					<img src="/assets/deskapp/vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
+					<img src="/images/logo-bawaslu.png" alt="" class="dark-logo" />
 					<img
-						src="/assets/deskapp/vendors/images/deskapp-logo-white.svg"
+						src="/images/logo-bawaslu.png""
 						alt="/"
 						class="light-logo"
 					/>
@@ -35,6 +35,19 @@
 							<ul class="submenu">
 								<li><a href="<?= url_to('suratMasuk') ?>">Surat Masuk</a></li>
 								<li><a href="<?= url_to('suratKeluar') ?>">Surat Keluar</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="javascript:;" class="dropdown-toggle">
+								<span class="micon bi bi-file-earmark-text"></span
+								><span class="mtext">Filter Surat</span>
+							</a>
+							<ul class="submenu">
+								<li><a href="<?= url_to('jenissurat') ?>">Jenis Surat</a></li>
+								<li><a href="<?= url_to('sifatsurat') ?>">Sifat Surat</a></li>
+								<li><a href="<?= url_to('statussurat') ?>">Status Surat</a></li>
+								<li><a href="<?= url_to('disposisikepada') ?>">Disposisi Kepada</a></li>
+								<li><a href="<?= url_to('disposisipetunjuk') ?>">Disposisi Petunjuk</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
