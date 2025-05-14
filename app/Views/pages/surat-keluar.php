@@ -7,7 +7,7 @@
             <div class="row d-flex justify-content-between">
                 <div class="col-md-6 col-sm-12">
                     <div class="title">
-                        <h4>Data Surat Masuk</h4>
+                        <h4>Data Surat Keluar</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
@@ -15,7 +15,7 @@
                                 <a href="<?= url_to('admin') ?>">Surat</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Surat Masuk
+                                Surat Keluar
                             </li>
                         </ol>   
                     </nav>
@@ -55,8 +55,8 @@
     </div>
 </div>
 
-<?= view('components/modals/surat-masuk/add-modal') ?>
-<?= view('components/modals/surat-masuk/edit-modal') ?>
+<?= view('components/modals/surat-keluar/add-modal') ?>
+<?= view('components/modals/surat-keluar/edit-modal') ?>
 
 <script>
     $(function () {
