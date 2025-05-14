@@ -26,10 +26,6 @@ class SuratServices {
                 'label' => 'Perihal',
                 'rules' => 'required'
             ],
-            'dibuat_oleh' => [
-                'label' => 'Dibuat Oleh',
-                'rules' => 'required'
-            ],
             'dari' => [
                 'label' => 'Dari',
                 'rules' => 'required'
@@ -42,6 +38,7 @@ class SuratServices {
                 'label' => 'Tipe Surat',
                 'rules' => 'required|in_list[masuk, keluar]'
             ],
+            
         ];
 
         $validation = \Config\Services::validation();
@@ -231,16 +228,8 @@ class SuratServices {
                 'label' => 'Nomor Surat',
                 'rules' => 'required'
             ],
-            'tanggal_surat' => [
-                'label' => 'Tanggal Surat',
-                'rules' => 'required|valid_date'
-            ],
             'perihal' => [
                 'label' => 'Perihal',
-                'rules' => 'required'
-            ],
-            'dibuat_oleh' => [
-                'label' => 'Dibuat Oleh',
                 'rules' => 'required'
             ]
         ];

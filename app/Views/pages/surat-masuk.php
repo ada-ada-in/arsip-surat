@@ -55,8 +55,8 @@
     </div>
 </div>
 
-<?= view('components/modals/disposisi-kepada/add-modal') ?>
-<?= view('components/modals/disposisi-kepada/edit-modal') ?>
+<?= view('components/modals/surat-masuk/add-modal') ?>
+<?= view('components/modals/surat-masuk/edit-modal') ?>
 
 <script>
     $(function () {
@@ -89,9 +89,15 @@
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                     <button type="button" class="dropdown-item btn-edit" data-toggle="modal" data-target="#editmodal"
                                         data-id="${item.id}"
-                                        data-name="${item.nama_disposisi_kepada}"
-                                        data-kordinator="${item.nama_kordinator}"
-                                        data-nip="${item.nip}">
+                                        data-user="${item.id_user}"
+                                        data-jenis="${item.id_jenis}"
+                                        data-sifat="${item.id_sifat}"
+                                        data-status="${item.id_status}"
+                                        data-perihal="${item.perihal}"
+                                        data-nomorsurat="${item.nomor_surat}"
+                                        data-nomoragenda="${item.nomor_agenda}"
+                                        data-lampiran="${item.lampiran}"
+                                        data-dari="${item.dari}">
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
                                     <button class="dropdown-item btn-delete" data-id="${item.id}">
@@ -166,14 +172,23 @@
 
             const form = this;
             const formData = {
-                nama_disposisi_kepada: $(form).find('input[name="nama_disposisi_kepada"]').val(),
-                nama_kordinator: $(form).find('input[name="nama_kordinator"]').val(),
-                nip: $(form).find('input[name="nip"]').val()
+                id_user: $(form).find('select[name="id_user"]').val(),
+                id_jenis: $(form).find('select[name="id_jenis"]').val(),
+                id_sifat: $(form).find('select[name="id_sifat"]').val(),
+                id_status: $(form).find('select[name="id_status"]').val(),
+                nomor_surat: $(form).find('input[name="nomor_surat"]').val(),
+                lampiran: $(form).find('input[name="lampiran"]').val(),
+                nomor_agenda: $(form).find('input[name="nomor_agenda"]').val(),
+                perihal: $(form).find('input[name="perihal"]').val(),
+                dari: $(form).find('input[name="dari"]').val(),
+                tipe_surat: $(form).find('input[name="tipe_surat"]').val()
             };
+
+            console.log(formData);
 
 
             $.ajax({
-                url: `/api/v1/disposisi-kepada`,
+                url: `/api/v1/surat`,
                 type: 'POST',
                 dataType: 'json',
                 data: JSON.stringify(formData),
@@ -211,12 +226,12 @@
 
         $(document).on('click', '.btn-delete', function () {
             const id = $(this).data('id');
-            if (confirm('Apakah kamu yakin ingin menghapus disposisi kepada ini?')) {
+            if (confirm('Apakah kamu yakin ingin surat ini?')) {
                 $.ajax({
-                    url: `/api/v1/disposisi-kepada/${id}`,
+                    url: `/api/v1/surat/${id}`,
                     type: 'DELETE',
                     success: function () {
-                        alert('Disposisi pentujuk berhasil dihapus!');
+                        alert('Surat pentujuk berhasil dihapus!');
                         loadData(); 
                     },
                     error: function (xhr, status, error) {
@@ -250,72 +265,79 @@
         $(document).on('click', '.btn-edit', function () {
             const button = $(this);
             $('#editmodal input[name="id"]').val(button.data('id'));
-            $('#editmodal input[name="nama_disposisi_kepada"]').val(button.data('name'));
-            $('#editmodal input[name="nama_kordinator"]').val(button.data('kordinator'));
-            $('#editmodal input[name="nip"]').val(button.data('nip'));
+            $('#editmodal input[name="perihal"]').val(button.data('perihal'));
+            $('#editmodal input[name="nomor_surat"]').val(button.data('nomorsurat'));
+            $('#editmodal input[name="nomor_agenda"]').val(button.data('nomoragenda'));
+            $('#editmodal input[name="lampiran"]').val(button.data('lampiran'));
+            $('#editmodal input[name="dari"]').val(button.data('dari'));
+            $('#editmodal select[name="id_user"]').val(button.data('user'));
+            $('#editmodal select[name="id_jenis"]').val(button.data('jenis'));
+            $('#editmodal select[name="id_sifat"]').val(button.data('sifat'));
+            $('#editmodal select[name="id_status"]').val(button.data('status'));
+            $('#editmodal').modal('show');
         });
 
         $('#form-edit').on('submit', function (e) {
-    e.preventDefault();
+            e.preventDefault();
 
-    const form = this;
-    const id = $(form).find('input[name="id"]').val();
-    const formData = {
-        nama_disposisi_kepada: $(form).find('input[name="nama_disposisi_kepada"]').val(),
-        nama_kordinator: $(form).find('input[name="nama_kordinator"]').val(),
-        nip: $(form).find('input[name="nip"]').val()
-    };
+            const form = this;
+            const id = $(form).find('input[name="id"]').val();
+            const formData = {
+                id_user: $(form).find('select[name="id_user"]').val(),
+                id_jenis: $(form).find('select[name="id_jenis"]').val(),
+                id_sifat: $(form).find('select[name="id_sifat"]').val(),
+                id_status: $(form).find('select[name="id_status"]').val(),
+                nomor_surat: $(form).find('input[name="nomor_surat"]').val(),
+                lampiran: $(form).find('input[name="lampiran"]').val(),
+                nomor_agenda: $(form).find('input[name="nomor_agenda"]').val(),
+                perihal: $(form).find('input[name="perihal"]').val(),
+                dari: $(form).find('input[name="dari"]').val(),
+                tipe_surat: $(form).find('input[name="tipe_surat"]').val()
+            };
 
-
-    $.ajax({
-            url: `/api/v1/disposisi-kepada/${id}`,
-            type: 'PUT',
-            dataType: 'json',
-            data: JSON.stringify(formData),
-            processData: false,
-            contentType: 'application/json',
-            success: function (response) {
-                alert(response.message);
-                $('#editmodal').modal('hide');
-                loadData();
-            },
-            error: function (xhr) {
-                try {
-                    const response = JSON.parse(xhr.responseText);
-                    let errorMessage = '';
-                    if (response.messages) {
-                        for (const key in response.messages) {
-                            errorMessage += `${response.messages[key]}\n`;
+            $.ajax({
+                url: `/api/v1/surat/${id}`,
+                type: 'PUT',
+                dataType: 'json',
+                data: JSON.stringify(formData),
+                processData: false,
+                contentType: 'application/json',
+                success: function (response) {
+                    alert(response.message);
+                    $('#editmodal').modal('hide');
+                    loadData();
+                },
+                error: function (xhr) {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        let errorMessage = '';
+                        if (response.messages) {
+                            for (const key in response.messages) {
+                                errorMessage += `${response.messages[key]}\n`;
+                            }
+                        } else if (response.message) {
+                            errorMessage = response.message;
+                        } else {
+                            errorMessage = 'Terjadi kesalahan saat update.';
                         }
-                    } else if (response.message) {
-                        errorMessage = response.message;
-                    } else {
-                        errorMessage = 'Terjadi kesalahan saat update.';
+                        alert(errorMessage);
+                    } catch (e) {
+                        alert('Gagal memproses respons error.');
                     }
-                    alert(errorMessage);
-                } catch (e) {
-                    alert('Gagal memproses respons error.');
                 }
-            }
+            });
         });
-    });
 
+        $('#searchinput').on('input', function () {
+            const keyword = $(this).val().toLowerCase();
+            const filtered = filteredData.filter(item =>
+                item.nama_disposisi_kepada.toLowerCase().includes(keyword)
+            );
 
-    $('#searchinput').on('input', function () {
-        const keyword = $(this).val().toLowerCase();
-        const filtered = filteredData.filter(item =>
-            item.nama_disposisi_kepada.toLowerCase().includes(keyword)
-        );
-
-        currentPage = 1; // reset to first page
-        displayTable(filtered);
-        displayPagination(filtered.length);
-    });
-
-
-
-            
-
+            currentPage = 1; // reset to first page
+            displayTable(filtered);
+            displayPagination(filtered.length);
+        });
     });
 </script>
 

@@ -12,7 +12,7 @@ class SuratModels extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'id_user', 'id_jenis', 'id_sifat', 'id_status', 'id_disposisi_kepada', 'id_disposisi_petunjuk', 'perihal', 'nomor_surat', 'tanggal_surat', 'tanggal_diterima', 'lampiran', 'tipe_surat', 'nomor_agenda', 'is_completed'];
+    protected $allowedFields    = ['id', 'id_user', 'id_jenis', 'id_sifat', 'id_status', 'id_disposisi_kepada', 'id_disposisi_petunjuk', 'perihal', 'nomor_surat', 'tanggal_surat', 'tanggal_diterima', 'lampiran', 'tipe_surat', 'nomor_agenda', 'is_completed', 'dari'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

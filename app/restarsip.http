@@ -47,8 +47,8 @@
 
 ## jenis laporan
 
-# GET http://localhost:8080/api/v1/jenis-laporan
-# content-type: application/json
+GET http://localhost:8080/api/v1/jenis-laporan
+content-type: application/json
 
 # GET http://localhost:8080/api/v1/jenis-laporan/2
 # content-type: application/json
@@ -192,7 +192,6 @@
 
 # {
 #   "nomor_surat": "123",
-#   "asal_surat": "Asal Surat",
 #   "perihal": "Perihal",
 #   "lampiran": "Lampiran",
 #   "dibuat_oleh": "Dibuat Oleh",

@@ -7,7 +7,7 @@
             <div class="row d-flex justify-content-between">
                 <div class="col-md-6 col-sm-12">
                     <div class="title">
-                        <h4>Data Surat Keluar</h4>
+                        <h4>Data Surat Masuk</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
@@ -15,9 +15,9 @@
                                 <a href="<?= url_to('admin') ?>">Surat</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Surat Keluar
+                                Surat Masuk
                             </li>
-                        </ol>
+                        </ol>   
                     </nav>
                 </div>
                 <div class="col-md-3 col-sm-4 text-right">
@@ -35,11 +35,17 @@
                     <thead>
                         <tr>
                             <th class="table-plus datatable-nosort">No.</th>
-                            <th>Nama Jenis</th>
+                            <th>Pengirim</th>
+                            <th>Email Pengirim</th>
+                            <th>Nomor Surat</th>
+                            <th>Perihal</th>
+                            <th>Nomor Agenda</th>
+                            <th>Jenis Surat</th>
+                            <th>Tanggal Dibuat</th>
                             <th class="datatable-nosort">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="data-jenis">
+                    <tbody id="data-disposisi">
                         <!-- dynamic rows go here -->
                     </tbody>
                 </table>
@@ -49,8 +55,8 @@
     </div>
 </div>
 
-<?= view('components/modals/jenis-surat/add-modal') ?>
-<?= view('components/modals/jenis-surat/edit-modal') ?>
+<?= view('components/modals/surat-masuk/add-modal') ?>
+<?= view('components/modals/surat-masuk/edit-modal') ?>
 
 <script>
     $(function () {
@@ -68,7 +74,13 @@
                 row += `
                     <tr>
                         <td class="table-plus">${start + i + 1}</td>
+                        <td>${item.user_name}</td>
+                        <td>${item.user_email}</td>
+                        <td>${item.nomor_surat}</td>
+                        <td>${item.perihal}</td>
+                        <td>${item.nomor_agenda}</td>
                         <td>${item.nama_jenis_laporan}</td>
+                        <td>${item.created_at}</td>
                         <td>
                             <div class="dropdown">
                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -77,7 +89,15 @@
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                     <button type="button" class="dropdown-item btn-edit" data-toggle="modal" data-target="#editmodal"
                                         data-id="${item.id}"
-                                        data-name="${item.nama_jenis_laporan}">
+                                        data-user="${item.id_user}"
+                                        data-jenis="${item.id_jenis}"
+                                        data-sifat="${item.id_sifat}"
+                                        data-status="${item.id_status}"
+                                        data-perihal="${item.perihal}"
+                                        data-nomorsurat="${item.nomor_surat}"
+                                        data-nomoragenda="${item.nomor_agenda}"
+                                        data-lampiran="${item.lampiran}"
+                                        data-dari="${item.dari}">
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
                                     <button class="dropdown-item btn-delete" data-id="${item.id}">
@@ -90,7 +110,7 @@
                 `;
             });
 
-            $('#data-jenis').html(row);
+            $('#data-disposisi').html(row);
             $('#pageInfo').text(`Page ${currentPage} of ${Math.ceil(data.length / rowsPerPage)}`);
         }
 
@@ -121,18 +141,18 @@
 
         function loadData() {
             $.ajax({
-                url: '/api/v1/jenis-laporan',
+                url: '/api/v1/surat/keluar',
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
-                        let data = response.data.data;
+                        let data = response.data;
+						console.log(data);
 
                         if (!Array.isArray(data)) {
                             data = [data]; 
                         }
 
                     filteredData = data;
-                    console.log(filteredData);
                     displayTable(filteredData);
                     displayPagination(filteredData.length);
                 },
@@ -152,12 +172,23 @@
 
             const form = this;
             const formData = {
-                nama_jenis_laporan: $(form).find('input[name="nama_jenis_laporan"]').val()
+                id_user: $(form).find('select[name="id_user"]').val(),
+                id_jenis: $(form).find('select[name="id_jenis"]').val(),
+                id_sifat: $(form).find('select[name="id_sifat"]').val(),
+                id_status: $(form).find('select[name="id_status"]').val(),
+                nomor_surat: $(form).find('input[name="nomor_surat"]').val(),
+                lampiran: $(form).find('input[name="lampiran"]').val(),
+                nomor_agenda: $(form).find('input[name="nomor_agenda"]').val(),
+                perihal: $(form).find('input[name="perihal"]').val(),
+                dari: $(form).find('input[name="dari"]').val(),
+                tipe_surat: $(form).find('input[name="tipe_surat"]').val()
             };
+
+            console.log(formData);
 
 
             $.ajax({
-                url: `/api/v1/jenis-laporan`,
+                url: `/api/v1/surat`,
                 type: 'POST',
                 dataType: 'json',
                 data: JSON.stringify(formData),
@@ -195,12 +226,12 @@
 
         $(document).on('click', '.btn-delete', function () {
             const id = $(this).data('id');
-            if (confirm('Apakah kamu yakin ingin menghapus jenis laporan ini?')) {
+            if (confirm('Apakah kamu yakin ingin surat ini?')) {
                 $.ajax({
-                    url: `/api/v1/jenis-laporan/${id}`,
+                    url: `/api/v1/surat/${id}`,
                     type: 'DELETE',
                     success: function () {
-                        alert('Jenis laporan berhasil dihapus!');
+                        alert('Surat pentujuk berhasil dihapus!');
                         loadData(); 
                     },
                     error: function (xhr, status, error) {
@@ -234,67 +265,79 @@
         $(document).on('click', '.btn-edit', function () {
             const button = $(this);
             $('#editmodal input[name="id"]').val(button.data('id'));
-            $('#editmodal input[name="nama_jenis_laporan"]').val(button.data('name'));
+            $('#editmodal input[name="perihal"]').val(button.data('perihal'));
+            $('#editmodal input[name="nomor_surat"]').val(button.data('nomorsurat'));
+            $('#editmodal input[name="nomor_agenda"]').val(button.data('nomoragenda'));
+            $('#editmodal input[name="lampiran"]').val(button.data('lampiran'));
+            $('#editmodal input[name="dari"]').val(button.data('dari'));
+            $('#editmodal select[name="id_user"]').val(button.data('user'));
+            $('#editmodal select[name="id_jenis"]').val(button.data('jenis'));
+            $('#editmodal select[name="id_sifat"]').val(button.data('sifat'));
+            $('#editmodal select[name="id_status"]').val(button.data('status'));
+            $('#editmodal').modal('show');
         });
 
         $('#form-edit').on('submit', function (e) {
-    e.preventDefault();
+            e.preventDefault();
 
-    const form = this;
-    const id = $(form).find('input[name="id"]').val();
-    const formData = {
-        nama_jenis_laporan: $(form).find('input[name="nama_jenis_laporan"]').val()
-    };
+            const form = this;
+            const id = $(form).find('input[name="id"]').val();
+            const formData = {
+                id_user: $(form).find('select[name="id_user"]').val(),
+                id_jenis: $(form).find('select[name="id_jenis"]').val(),
+                id_sifat: $(form).find('select[name="id_sifat"]').val(),
+                id_status: $(form).find('select[name="id_status"]').val(),
+                nomor_surat: $(form).find('input[name="nomor_surat"]').val(),
+                lampiran: $(form).find('input[name="lampiran"]').val(),
+                nomor_agenda: $(form).find('input[name="nomor_agenda"]').val(),
+                perihal: $(form).find('input[name="perihal"]').val(),
+                dari: $(form).find('input[name="dari"]').val(),
+                tipe_surat: $(form).find('input[name="tipe_surat"]').val()
+            };
 
-    $.ajax({
-            url: `/api/v1/jenis-laporan/${id}`,
-            type: 'PUT',
-            dataType: 'json',
-            data: JSON.stringify(formData),
-            processData: false,
-            contentType: 'application/json',
-            success: function (response) {
-                alert(response.message);
-                $('#editmodal').modal('hide');
-                loadData();
-            },
-            error: function (xhr) {
-                try {
-                    const response = JSON.parse(xhr.responseText);
-                    let errorMessage = '';
-                    if (response.messages) {
-                        for (const key in response.messages) {
-                            errorMessage += `${response.messages[key]}\n`;
+            $.ajax({
+                url: `/api/v1/surat/${id}`,
+                type: 'PUT',
+                dataType: 'json',
+                data: JSON.stringify(formData),
+                processData: false,
+                contentType: 'application/json',
+                success: function (response) {
+                    alert(response.message);
+                    $('#editmodal').modal('hide');
+                    loadData();
+                },
+                error: function (xhr) {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        let errorMessage = '';
+                        if (response.messages) {
+                            for (const key in response.messages) {
+                                errorMessage += `${response.messages[key]}\n`;
+                            }
+                        } else if (response.message) {
+                            errorMessage = response.message;
+                        } else {
+                            errorMessage = 'Terjadi kesalahan saat update.';
                         }
-                    } else if (response.message) {
-                        errorMessage = response.message;
-                    } else {
-                        errorMessage = 'Terjadi kesalahan saat update.';
+                        alert(errorMessage);
+                    } catch (e) {
+                        alert('Gagal memproses respons error.');
                     }
-                    alert(errorMessage);
-                } catch (e) {
-                    alert('Gagal memproses respons error.');
                 }
-            }
+            });
         });
-    });
 
+        $('#searchinput').on('input', function () {
+            const keyword = $(this).val().toLowerCase();
+            const filtered = filteredData.filter(item =>
+                item.nama_disposisi_kepada.toLowerCase().includes(keyword)
+            );
 
-    $('#searchinput').on('input', function () {
-        const keyword = $(this).val().toLowerCase();
-        const filtered = filteredData.filter(item =>
-            item.nama_jenis_laporan.toLowerCase().includes(keyword)
-        );
-
-        currentPage = 1; // reset to first page
-        displayTable(filtered);
-        displayPagination(filtered.length);
-    });
-
-
-
-            
-
+            currentPage = 1; // reset to first page
+            displayTable(filtered);
+            displayPagination(filtered.length);
+        });
     });
 </script>
 
