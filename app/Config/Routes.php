@@ -19,6 +19,7 @@ $routes->group('admin', static function($routes) {
     $routes->get('disposisipetunjuk', 'PagesController::disposisipetunjuk', ['as' => 'disposisipetunjuk']); 
     $routes->get('jenissurat', 'PagesController::jenissurat', ['as' => 'jenissurat']); 
     $routes->get('sifatsurat', 'PagesController::sifatsurat', ['as' => 'sifatsurat']); 
+    $routes->get('isidisposisi', 'PagesController::isidisposisi', ['as' => 'isidisposisi']); 
     $routes->get('statussurat', 'PagesController::statussurat', ['as' => 'statussurat']); 
 });
 

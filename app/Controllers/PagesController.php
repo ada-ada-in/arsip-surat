@@ -56,6 +56,10 @@ class PagesController extends BaseController
     {
         return view('pages/statussurat');
     }
+    public function isidisposisi(): string 
+    {
+        return view('pages/isidisposisi');
+    }
 
 
     // auth
