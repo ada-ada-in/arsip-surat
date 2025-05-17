@@ -72,7 +72,7 @@
                         <td>${item.nomor_surat}</td> 
                         <td>${item.user_name}</td> 
                          <td>
-                            <span class="badge ${item.tipe_surat == 'masuk' ? 'bg-success' : 'bg-secondary'} text-white fw-bold">
+                            <span class="badge ${item.tipe_surat == 'masuk' ? 'bg-primary' : 'bg-warning'} text-white fw-bold">
                                 ${item.tipe_surat}
                             </span>
                         </td>

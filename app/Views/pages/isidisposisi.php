@@ -20,10 +20,9 @@
                         </ol>   
                     </nav>
                 </div>
-                <div class="col-md-3 col-sm-4 text-right">
-                    <div class="form-group">
-                        <input class="form-control" id="searchinput" placeholder="Cari....." type="text" />
-                    </div>
+                <div class="col-md-6 col-sm-12  d-flex justify-content-end align-items-start">
+                    <button class="btn btn-primary mx-4">Cetak</button>
+                    <button class="btn btn-primary">Simpan</button>
                 </div>
             </div>
         </div>
@@ -47,22 +46,25 @@
                 <div class="row">
                     <div class="col border border-dark border-2">
                         <div class="m-2">
-                            <p>No. Surat    :</p>
-                            <p>Tgl Surat    :</p>
-                            <p>Lampiran     :</p>
+                            <p id="noSurat">No. Surat    :</p>
+                            <p id="tglSurat">Tgl Surat    :</p>
+                            <p id="lampiran">Lampiran     :</p>
                         </div>
                     </div>
                     <div class="col border border-dark border-2">
                         <div class="m-2">
-                            <p>Status       :</p>
-                            <p>Sifat        :</p>
-                            <p>Jenis        :</p>
+                            <p id="status">Status       :</p>
+                            <p id="sifat">Sifat        :</p>
+                            <p id="jenis">Jenis        :</p>
                         </div>
                     </div>
                     <div class="col border border-dark border-2">
                         <div class="m-2">
-                            <p>Di Terima    :</p>
-                            <p>No. Agenda   :</p>
+                            <div class="d-flex align-items-center mb-2">
+                                <label for="diterima" class="me-2 fw-bold" style="min-width: 80px;">Di Terima:</label>
+                                <input type="date" id="diterima" name="diterima" class="form-control w-50 mx-3" required>
+                            </div>
+                            <p id="noAgenda" class="mb-0">No. Agenda :</p>
                         </div>
                     </div>
                 </div>
@@ -70,25 +72,14 @@
                 <!-- Dari dan Perihal -->
                 <div class="row border border-dark border-2">
                     <div class="mx-4 py-2">
-                        <p>Dari     :</p>
-                        <p>Perihal     :</p>
+                        <p id="dari">Dari     :</p>
+                        <p id="perihal">Perihal     :</p>
                     </div>
                 </div>
 
                 <!-- Urgensi -->
-                <div class="row d-flex justify-content-center align-items-center border border-dark border-2 p-2">
-                    <div class="col">
-                        <p><input type="checkbox"> Sangat Segera</p>
-                    </div>
-                    <div class="col">
-                        <p><input type="checkbox"> Segera</p>
-                    </div>
-                    <div class="col">
-                        <p><input type="checkbox"> Penting</p>
-                    </div>
-                    <div class="col">
-                        <p><input type="checkbox"> Biasa</p>
-                    </div>
+                <div class="row d-flex justify-content-center align-items-center border border-dark border-2 p-2" id="jenislaporan">
+                    <!-- Data from AJAX will go here -->
                 </div>
 
                 <!-- Disposisi dan Petunjuk -->
@@ -134,5 +125,73 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function() {
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+
+        $.ajax({
+            url: '/api/v1/jenis-laporan',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                const data = response.data.data;
+                let div = ``;
+
+                data.forEach(item => {
+                    div += `
+                        <div class="col-md-3 col-sm-6">
+                            <p>
+                                <input type="checkbox" name="jenis_laporan" value="${item.nama_jenis_laporan}">
+                                ${item.nama_jenis_laporan}
+                            </p>
+                        </div>
+                    `;
+                });
+
+                $('#jenislaporan').html(div);
+            },
+            error: function(error) {
+                console.error('Gagal mengambil data jenis laporan: ', error);
+            }
+        });
+
+        $.ajax({
+            url: `/api/v1/surat/${id}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function(response){
+                const data = response.data
+                console.log(data)
+                const noSurat = data.nomor_surat
+                const tglSurat = data.created_at
+                const tanggalObj = new Date(tglSurat);
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const formattedTanggal = tanggalObj.toLocaleDateString('id-ID', options);
+                const lampiran = data.lampiran
+                const status = data.nama_status_laporan
+                const sifat = data.nama_sifat_laporan
+                const jenis = data.nama_jenis_laporan
+                const noAgenda = data.nomor_agenda
+                const dari = data.dari
+                const perihal = data.perihal
+
+                $('#noSurat').html(`No. Surat :   ${noSurat}`);
+                $('#tglSurat').html(`Tgl Surat :  ${formattedTanggal}`);
+                $('#lampiran').html(`Lampiran :  ${lampiran}`);
+                $('#status').html(`Status :  ${status}`);
+                $('#sifat').html(`Sifat :  ${sifat}`);
+                $('#jenis').html(`Jenis :  ${jenis}`);
+                $('#noAgenda').html(`No. Agenda :  ${noAgenda}`);
+                $('#dari').html(`Dari       :  ${dari}`);
+                $('#perihal').html(`Perihal :  ${perihal}`);
+            }
+        })
+
+    });
+</script>
 
 <?= $this->endSection() ?>

@@ -9,7 +9,6 @@
                 <div class="basic-form">
                     <form id="form-add">
                         <div class="row">
-                            <input type="text" class="form-control" name="id" hidden required>
                             <div class="col-12 mt-3">
                                 <select name="id_user" class="custom-select" required>
                                     <!-- pingirim -->

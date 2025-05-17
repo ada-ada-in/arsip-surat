@@ -331,7 +331,12 @@
         $('#searchinput').on('input', function () {
             const keyword = $(this).val().toLowerCase();
             const filtered = filteredData.filter(item =>
-                item.nama_disposisi_kepada.toLowerCase().includes(keyword)
+                item.user_email.toLowerCase().includes(keyword) ||
+                item.user_name.toLowerCase().includes(keyword) ||
+                item.nomor_surat.toLowerCase().includes(keyword) ||
+                item.perihal.toLowerCase().includes(keyword) ||
+                item.nomor_agenda.toLowerCase().includes(keyword) ||
+                item.nama_jenis_laporan.toLowerCase().includes(keyword)
             );
 
             currentPage = 1; // reset to first page
