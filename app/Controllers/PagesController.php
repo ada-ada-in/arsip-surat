@@ -60,6 +60,10 @@ class PagesController extends BaseController
     {
         return view('pages/isidisposisi');
     }
+    public function print(): string
+    {
+        return view('pages/print');
+    }
 
 
     // auth

@@ -20,6 +20,7 @@ $routes->group('admin', static function($routes) {
     $routes->get('jenissurat', 'PagesController::jenissurat', ['as' => 'jenissurat']); 
     $routes->get('sifatsurat', 'PagesController::sifatsurat', ['as' => 'sifatsurat']); 
     $routes->get('disposisi/isidisposisi', 'PagesController::isidisposisi', ['as' => 'isidisposisi']); 
+    $routes->get('disposisi/print', 'PagesController::print', ['as' => 'print']); 
     $routes->get('statussurat', 'PagesController::statussurat', ['as' => 'statussurat']); 
 });
 

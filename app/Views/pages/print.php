@@ -1,37 +1,11 @@
-<?= $this->extend('layouth/admin_layout') ?>
-<?= $this->section('content') ?>
+<?= view('/components/include/head') ?>
 
 <div class="pd-ltr-20 xs-pd-20-10">
-    <div class="min-height-200px">
-        <div class="page-header">
-            <div class="row d-flex justify-content-between">
-                <div class="col-md-6 col-sm-12">
-                    <div class="title">
-                        <h4>Isi Disposisi</h4>
-                    </div>
-                    <nav aria-label="breadcrumb" role="navigation">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="<?= url_to('admin') ?>">Disposisi</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                Isi Disposisi
-                            </li>
-                        </ol>   
-                    </nav>
-                </div>
-                <div class="col-md-6 col-sm-12  d-flex justify-content-end align-items-start"">
-                <div id="cetak"></div>
-                <button class="btn btn-primary" id="btnSimpan" type="submit">Simpan</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-box mb-30 border border-dark border-2">
-            <div class="pb-20 table-responsive" id="generatePdf">
+        <div class="card-box mb-30 border border-dark border-2 p-3">
+            <div class="pb-20" id="generatePdf">
                 <!-- Header Logo dan Judul -->
                 <div class="row mx-auto d-flex align-items-center text-center">
-                    <img src="/images/logo-bawaslu.png" width="300" class="m-5">
+                    <img src="/images/logo-bawaslu.png" class="img-fluid my-3 mx-auto d-block" style="max-width: 300px;">
                     <div class="mx-5">
                         <h3>Badan Pengawas Pemilihan Umum <br> Kabupaten Muaro Jambi</h3>
                     </div>
@@ -39,7 +13,7 @@
 
                 <!-- Peringatan -->
                 <div class="row d-flex justify-content-center border border-dark border-2 py-3">
-                    <h5>PERHATIAN: DILARANG MEMISAHKAN SEHELAI SURAT APAPUN YANG DIGABUNG DALAM BERKAS INI</h5>
+                    <h6>PERHATIAN: DILARANG MEMISAHKAN SEHELAI SURAT APAPUN YANG DIGABUNG DALAM BERKAS INI</h6>
                 </div>
 
                 <!-- Informasi Surat -->
@@ -83,7 +57,7 @@
                 </div>
 
                 <!-- Disposisi dan Petunjuk -->
-                <div class="row border border-dark">
+                <div class="row">
                     <div class="col-6 p-4" id="disposisikepada">
                         <!-- checkbox disposisi kepada -->
                     </div>
@@ -151,16 +125,6 @@
                 $('#dari').html(`Dari       :  ${dari}`);
                 $('#perihal').html(`Perihal :  ${perihal}`);
                 $('#diterima').val(formattedTerima);
-
-                let cetak = ``
-
-                cetak = 
-                `
-                <a class="btn btn-primary mx-4" href="/admin/disposisi/print?id=${id}" target="_blank">Cetak</a>
-                `
-
-                $('#cetak').html(cetak);
-
 
                 if (tglterima) {
                     const tglTerimaObj = new Date(tglterima);
@@ -354,23 +318,22 @@
     });
 });
 
-function generatePDF() {
-    const element = document.getElementById('generatePdf');
+  setTimeout(() => {
+    window.print()
+  },1500)
 
-    const opt = {
-      margin:       [10, 10, 10, 10],
-      filename:     'arsip.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2 },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().set(opt).from(element).save();
-  }
 </script>
 
 
+<?= view('/components/include/footer') ?>
+<?= view('/components/include/script') ?>
 
 
-<?= $this->endSection() ?>
 
+<style>
+@media print {
+  @page {
+    size: A4;
+  }
+}
+</style>
