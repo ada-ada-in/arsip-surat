@@ -47,8 +47,8 @@
 
 ## jenis laporan
 
-GET http://localhost:8080/api/v1/jenis-laporan
-content-type: application/json
+# GET http://localhost:8080/api/v1/jenis-laporan
+# content-type: application/json
 
 # GET http://localhost:8080/api/v1/jenis-laporan/2
 # content-type: application/json
@@ -195,8 +195,8 @@ content-type: application/json
 #   "perihal": "Perihal",
 #   "lampiran": "Lampiran",
 #   "dibuat_oleh": "Dibuat Oleh",
-#   "id_sifat": 1,
-#   "id_jenis": 1,
+#   "id_sifat": 3,
+#   "id_jenis": 3,
 #   "tanggal_diterima": "2023-10-01",
 #   "id_status": 1,
 #   "nomor_agenda": "123",
@@ -206,23 +206,13 @@ content-type: application/json
 # }
 
 
-# PUT http://localhost:8080/api/v1/surat/3
-# content-type: application/json
+PUT http://localhost:8080/api/v1/surat/12
+content-type: application/json
 
-# {
-#   "nomor_surat": "11",
-#   "tanggal_surat": "2023-10-01",
-#   "asal_surat": "Asal Surat",
-#   "perihal": "Perihal",
-#   "lampiran": "Lampiran",
-#   "dibuat_oleh": "Dibuat Oleh",
-#   "id_sifat": 1,
-#   "id_jenis": 1,
-#   "id_status": 1,
-#   "id_disposisi_kepada": 1,
-#   "id_disposisi_petunjuk": 1,
-#   "id_user": 1
-# }
+{
+  "id_disposisi_kepada": 2,
+  "id_disposisi_petunjuk": 2
+}
 
 # DELETE http://localhost:8080/api/v1/surat/4
 # content-type: application/json

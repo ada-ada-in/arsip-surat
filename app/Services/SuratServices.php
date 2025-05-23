@@ -239,26 +239,6 @@ class SuratServices {
             ];
         }
 
-        $rules = [
-            'nomor_surat' => [
-                'label' => 'Nomor Surat',
-                'rules' => 'required'
-            ],
-            'perihal' => [
-                'label' => 'Perihal',
-                'rules' => 'required'
-            ]
-        ];
-
-        $validation = \Config\Services::validation();
-        $validation->setRules($rules);
-
-        if (!$validation->run($data)) {
-            return [
-                'status' => false,
-                'errors' => $validation->getErrors()
-            ];
-        }
 
         $this->suratmodel->update($id, $data);
 

@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12  d-flex justify-content-end align-items-start">
                     <button class="btn btn-primary mx-4">Cetak</button>
-                    <button class="btn btn-primary">Simpan</button>
+                    <button class="btn btn-primary" id="btnSimpan" type="submit">Simpan</button>
                 </div>
             </div>
         </div>
@@ -84,27 +84,11 @@
 
                 <!-- Disposisi dan Petunjuk -->
                 <div class="row border border-dark">
-                    <div class="col-6 p-4">
-                        <p class="font-weight-bold">Disposisi Kepada:</p>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p><input type="checkbox"> Ketua / Koord. SDMO dan Diklat</p>
-                                <p><input type="checkbox"> Koord. Pengawasan Pelanggaran dan Penyelesaian Sengketa</p>
-                                <p><input type="checkbox"> Koord. HPP/HM</p>
-                                <p><input type="checkbox"> Koordinator Sekretariat</p>
-                            </div>
-                        </div>
+                    <div class="col-6 p-4" id="disposisikepada">
+                        <!-- checkbox disposisi kepada -->
                     </div>
-                    <div class="col-6 p-4">
-                        <p class="font-weight-bold">Petunjuk Disposisi:</p>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p><input type="checkbox"> Ketua / Koord. SDMO dan Diklat</p>
-                                <p><input type="checkbox"> Koord. Pengawasan Pelanggaran dan Penyelesaian Sengketa</p>
-                                <p><input type="checkbox"> Koord. HPP/HM</p>
-                                <p><input type="checkbox"> Koordinator Sekretariat</p>
-                            </div>
-                        </div>
+                    <div class="col-6 p-4" id="disposisipetunjuk">
+                       <!-- checkbox disposisi petunjuk -->
                     </div>
 
                     <div class="col-8"></div>
@@ -112,11 +96,11 @@
                     <!-- Tanda Tangan -->
                     <div class="col-4 mt-5">
                         <div class="float-end text-end pe-5">
-                            <p>Muaro Jambi, ____________</p>
-                            <p>Koordinator Sekretariat</p>
+                            <p id="ttd-tanggal">Muaro Jambi, ____________</p>
+                            <p id="ttd-nama">______________________</p>
                             <br><br><br>
-                            <p class="fw-bold">__________________________</p>
-                            <p>NIP: ______________________</p>
+                            <p class="fw-bold"  id="ttd-kordinator">__________________________</p>
+                            <p id="ttd-nip">NIP: ______________________</p>
                         </div>
                     </div>
                 </div>
@@ -132,40 +116,12 @@
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
 
-
-        $.ajax({
-            url: '/api/v1/jenis-laporan',
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                const data = response.data.data;
-                let div = ``;
-
-                data.forEach(item => {
-                    div += `
-                        <div class="col-md-3 col-sm-6">
-                            <p>
-                                <input type="checkbox" name="jenis_laporan" value="${item.nama_jenis_laporan}">
-                                ${item.nama_jenis_laporan}
-                            </p>
-                        </div>
-                    `;
-                });
-
-                $('#jenislaporan').html(div);
-            },
-            error: function(error) {
-                console.error('Gagal mengambil data jenis laporan: ', error);
-            }
-        });
-
         $.ajax({
             url: `/api/v1/surat/${id}`,
             type: 'GET',
             dataType: 'json',
             success: function(response){
                 const data = response.data
-                console.log(data)
                 const noSurat = data.nomor_surat
                 const tglSurat = data.created_at
                 const tanggalObj = new Date(tglSurat);
@@ -178,6 +134,11 @@
                 const noAgenda = data.nomor_agenda
                 const dari = data.dari
                 const perihal = data.perihal
+                const tglterima = data.tanggal_diterima
+                const tglTerimaObj = new Date(tglterima)
+                const formattedTerima = tglTerimaObj.toLocaleDateString('id-ID', options);
+                const disposisiKepada = data.id_disposisi_kepada
+                const disposisiPetunjuk = data.id_disposisi_petunjuk
 
                 $('#noSurat').html(`No. Surat :   ${noSurat}`);
                 $('#tglSurat').html(`Tgl Surat :  ${formattedTanggal}`);
@@ -188,8 +149,200 @@
                 $('#noAgenda').html(`No. Agenda :  ${noAgenda}`);
                 $('#dari').html(`Dari       :  ${dari}`);
                 $('#perihal').html(`Perihal :  ${perihal}`);
+                $('#diterima').val(formattedTerima);
+
+                if (tglterima) {
+                    const tglTerimaObj = new Date(tglterima);
+                    const yyyy = tglTerimaObj.getFullYear();
+                    const mm = String(tglTerimaObj.getMonth() + 1).padStart(2, '0'); // bulan 0-based
+                    const dd = String(tglTerimaObj.getDate()).padStart(2, '0');
+                    const formattedInputDate = `${yyyy}-${mm}-${dd}`;
+                    $('#diterima').val(formattedInputDate);
+                } else {
+                    $('#diterima').val('');
+                }
+
+                $.ajax({
+                    url: '/api/v1/disposisi-kepada',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        const data = response.data;
+                        let div = `<div class="row">`;
+
+                        data.forEach((item, index) => {
+                            if (index % 8 === 0) {
+                                div += `<div class="col-md-6">`;
+                            }
+
+                            const isChecked = disposisiKepada === item.id ? 'checked' : '';
+
+                            div += `
+                                <p>
+                                    <input type="radio" name="disposisi_kepada"
+                                        value="${item.id}"
+                                        data-nama="${item.nama_disposisi_kepada}"
+                                        data-kordinator="${item.nama_kordinator}"
+                                        data-nip="${item.nip}"
+                                        data-created_at="${item.created_at}" ${isChecked}>
+                                    ${item.nama_disposisi_kepada}
+                                </p>
+                            `;
+
+                            if ((index % 8 === 7) || (index === data.length - 1)) {
+                                div += `</div>`;
+                            }
+                        });
+
+                        div += `</div>`;
+                        $('#disposisikepada').html(div);
+
+                        // Fungsi update isi ttd
+                        function updateTTD(elem) {
+                            const nama = elem.data('nama');
+                            const nip = elem.data('nip');
+                            const kordinator = elem.data('kordinator');
+
+                            const today = new Date();
+                            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                            const formattedDate = today.toLocaleDateString('id-ID', options);
+
+                            $('#ttd-nama').text(nama);
+                            $('#ttd-nip').text('NIP: ' + nip);
+                            $('#ttd-tanggal').text('Muaro Jambi, ' + formattedDate);
+                            $('#ttd-kordinator').text(kordinator);
+                        }
+
+                        // Set default dari radio yang sudah checked
+                        const checkedRadio = $('input[name="disposisi_kepada"]:checked');
+                        if (checkedRadio.length) {
+                            updateTTD(checkedRadio);
+                        }
+
+                        // Event handler untuk perubahan radio
+                        $('input[name="disposisi_kepada"]').on('change', function () {
+                            updateTTD($(this));
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Gagal mengambil data jenis laporan: ', error);
+                    }
+                });
+
+
+                
+
+                $.ajax({
+                    url: '/api/v1/disposisi-petunjuk',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        const data = response.data;
+                        let div = `<div class="row">`;
+                        data.forEach((item, index) => {
+                            if (index % 8 === 0) {
+                                div += `<div class="col-md-6">`;
+                            }
+                            
+                            const isChecked = disposisiPetunjuk === item.id ? 'checked' : '';
+
+
+                            div += `
+                                <p>
+                                    <input type="radio" name="disposisi_petunjuk" value="${item.id}" ${isChecked}>
+                                    ${item.nama_disposisi_petunjuk}
+                                </p>
+                            `;
+
+                            if ((index % 8 === 7) || (index === data.length - 1)) {
+                                div += `</div>`;
+                            }
+                        });
+                        div += `</div>`;
+                        $('#disposisipetunjuk').html(div);
+
+                        $('input[name="disposisi_petunjuk"]').on('change', function () {
+                            const id = $(this).val();
+                            localStorage.setItem('id_disposisi_petunjuk', id);
+                        });
+
+                    },
+                    error: function(error) {
+                        console.error('Gagal mengambil data jenis laporan: ', error);
+                    }
+            });
+
+
+                $.ajax({
+                    url: '/api/v1/jenis-laporan',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        const data = response.data.data;
+                        let div = ``;
+
+                        data.forEach(item => {
+                            const isChecked = item.nama_jenis_laporan === jenis ? 'checked' : '';
+                             const isDisabled = 'disabled';
+                            div += `
+                                <div class="col-md-3 col-sm-6">
+                                    <p>
+                                        <input type="checkbox" name="jenis_laporan" value="${item.nama_jenis_laporan}" ${isChecked} ${isDisabled}>
+                                        ${item.nama_jenis_laporan}
+                                    </p>
+                                </div>
+                            `;
+                        });
+
+                        $('#jenislaporan').html(div);
+                    },
+                    error: function(error) {
+                        console.error('Gagal mengambil data jenis laporan: ', error);
+                    }
+                });
+
             }
         })
+
+    $('#btnSimpan').on('click', function () {
+        const disposisiKepada = $('input[name="disposisi_kepada"]:checked').val();
+        const disposisiPetunjuk = $('input[name="disposisi_petunjuk"]:checked').val();
+        const diterima = $('#diterima').val();
+
+        console.log(disposisiKepada)
+        console.log(disposisiPetunjuk)
+
+        if (!disposisiKepada || !disposisiPetunjuk) {
+            alert('Mohon lengkapi pilihan disposisi kepada dan petunjuk!');
+            return;
+        }
+
+        if(diterima == '') {
+            alert('Mohon lengkapi tanggal diterima!');
+            return;
+        }
+
+        $.ajax({
+            url: `/api/v1/surat/${id}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                id_disposisi_kepada: disposisiKepada,
+                id_disposisi_petunjuk: disposisiPetunjuk,
+                tanggal_diterima: diterima
+            }),
+            success: function (res) { 
+                alert('Data berhasil disimpan!');
+                location.reload();
+            },
+            error: function (err) {
+                alert('Gagal menyimpan data!');
+                console.error(err);
+            }
+        });
+    });
+
+        
 
     });
 </script>
