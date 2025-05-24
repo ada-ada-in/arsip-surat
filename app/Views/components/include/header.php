@@ -89,67 +89,8 @@
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<div class="notification-list mx-h-350 customscroll">
-								<ul>
-									<li>
-										<a href="#">
-											<img src="/assets/deskapp/vendors/images/img.jpg" alt="" />
-											<h3>John Doe</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="/assets/deskapp/vendors/images/photo1.jpg" alt="" />
-											<h3>Lea R. Frith</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="/assets/deskapp/vendors/images/photo2.jpg" alt="" />
-											<h3>Erik L. Richards</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="/assets/deskapp/vendors/images/photo3.jpg" alt="" />
-											<h3>John Doe</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="/assets/deskapp/vendors/images/photo4.jpg" alt="" />
-											<h3>Renee I. Hansen</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<img src="/assets/deskapp/vendors/images/img.jpg" alt="" />
-											<h3>Vicki M. Coleman</h3>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed...
-											</p>
-										</a>
-									</li>
+								<ul id="notification">
+										<!-- data -->
 								</ul>
 							</div>
 						</div>
@@ -182,3 +123,49 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+
+		const notification = () => {
+			$.ajax({
+				url: '/api/v1/surat/notification',
+				type: 'GET',
+				dataType: 'json',
+				success: function(response) {
+					const data = response.data;
+					console.log(data);
+					let div = '';
+
+					if (Array.isArray(data) && data.length > 0) {
+						data.forEach((item) => {
+							div += `
+								<li>
+									<a href="/admin/disposisi/isidisposisi?id=${item.id}">
+										<h3>Pengirim : ${item.user_email}</h3>
+										<h5>Dari : ${item.dari}</h5>
+										<p>No. Surat : ${item.nomor_surat}</p>
+									</a>
+								</li>
+							`;
+						});
+					} else {
+						div = `<li><a href="#"><p>Tidak ada notifikasi</p></a></li>`;
+					}
+
+					$('#notification').html(div);
+				},
+				error: function(xhr, status, error) {
+					console.error('Terjadi kesalahan:', error);
+					$('#notification').html('<li><a href="#"><p>Gagal memuat notifikasi</p></a></li>');
+				}
+			});
+		}
+
+		notification();
+
+		setInterval(() => {
+			notification();
+		}, 5000);
+
+
+		</script>

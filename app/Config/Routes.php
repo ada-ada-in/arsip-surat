@@ -47,6 +47,7 @@ $routes->group('api/v1', static function($routes) {
 
     $routes->group('user', static function($routes) {
         $routes->get('', 'Api\V1\UserController::getUserData', ['as' => 'api.user.getUserData']);
+        $routes->get('count', 'Api\V1\UserController::countUser', ['as' => 'api.user.countUser']);
         $routes->get('(:num)', 'Api\V1\UserController::getUserById/$1', ['as' => 'api.user.getUserById']);
         $routes->put('(:num)', 'Api\V1\UserController::updateUserById/$1', ['as' => 'api.user.updateUserById']);
         $routes->delete('(:num)', 'Api\V1\UserController::deleteUser/$1', ['as' => 'api.user.deleteUser']);
@@ -97,6 +98,11 @@ $routes->group('api/v1', static function($routes) {
     $routes->group('surat', static function($routes) {
         $routes->post('', 'api\v1\SuratController::addSurat', ['as' => 'api.user.addSurat']);
         $routes->get('', 'api\v1\SuratController::getSuratData', ['as' => 'api.user.getSuratData']);
+        $routes->get('notification', 'api\v1\SuratController::getSuratNotificationData', ['as' => 'api.user.getSuratNotificationData ']);
+        $routes->get('count', 'api\v1\SuratController::countSuratData', ['as' => 'api.user.countSuratData ']);
+        $routes->get('countin', 'api\v1\SuratController::countSuratMasukArsipData', ['as' => 'api.user.countSuratMasukArsipData ']);
+        $routes->get('countout', 'api\v1\SuratController::countSuratKeluarArsipData', ['as' => 'api.user.countSuratKeluarArsipData ']);
+        $routes->get('arsip', 'api\v1\SuratController::getSuratArsipData', ['as' => 'api.user.getSuratArsipData']);
         $routes->get('masuk', 'api\v1\SuratController::getSuratMasukData', ['as' => 'api.user.getSuratMasukData']);
         $routes->get('keluar', 'api\v1\SuratController::getSuratKeluarData', ['as' => 'api.user.getSuratKeluarData']);
         $routes->get('(:num)', 'api\v1\SuratController::getSuratById/$1', ['as' => 'api.user.getSuratById']);

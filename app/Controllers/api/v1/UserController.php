@@ -93,6 +93,25 @@ class UserController extends ResourceController
         }
     }
 
+    public function countUser()
+    {
+        try {
+            $result = $this->userServices->CountUserServices();
+
+            if (!$result['status']) {
+                return $this->fail($result['message'], 404);
+            }
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'],
+                'message' => 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
     public function updateUserById($id)
     {
         try {

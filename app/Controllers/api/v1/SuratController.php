@@ -89,6 +89,85 @@ class SuratController extends ResourceController
         }
     }
 
+    public function getSuratArsipData()
+    {
+        try {
+            $result = $this->suratServices->getSuratArsipDataServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    
+    }
+
+
+    public function getSuratNotificationData()
+    {
+        try {
+            $result = $this->suratServices->getSuratNotificationDataServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    
+    }
+
+    public function countSuratMasukArsipData()
+    {
+        try {
+            $result = $this->suratServices->countSuratMasukServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
+
+    public function countSuratKeluarArsipData()
+    {
+        try {
+            $result = $this->suratServices->countSuratKeluarServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
+    public function countSuratData()
+    {
+        try {
+            $result = $this->suratServices->countSuratServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
         public function getSuratKeluarData()
     {
         try {

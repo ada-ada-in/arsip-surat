@@ -107,6 +107,24 @@ class UserServices {
         ];
     }
 
+    
+    public function CountUserServices()
+    {
+        $data = $this->userModel->countAllResults();
+
+        if (empty($data)) {
+            return [
+                'status' => true,
+                'message' => 'Data user kosong'
+            ];
+        }
+
+        return [
+            'status' => true,
+            'data' => $data
+        ];
+    }
+
 
 
     public function getUserByIdServices($id)

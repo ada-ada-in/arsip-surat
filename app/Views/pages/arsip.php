@@ -51,7 +51,7 @@
     </div>
 </div>
 
-<?= view('components/modals/disposisi-kepada/edit-modal') ?>
+<?= view('components/modals/arsip/edit-modal') ?>
 
 <script>
     $(function () {
@@ -83,9 +83,12 @@
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                    <a  class="dropdown-item" href="/admin/disposisi/print?id=${item.id}" target="_blank" >
+                                        <i class="dw dw-file"></i> Download
+                                    </a>
                                     <button type="button" class="dropdown-item btn-edit" data-toggle="modal" data-target="#editmodal"
-                                        data-id="${item.id}">
-                                        <i class="dw dw-edit2"></i> Download
+                                        data-id="${item.id}" data-user="${item.id_user}" data-nomorsurat="${item.nomor_surat}" data-lampiran="${item.lampiran}"  data-iscompleted="${item.is_completed}" data-jenis="${item.id_jenis}" data-sifat="${item.id_sifat}" data-status="${item.id_sifat}" data-nomoragenda="${item.nomor_agenda}" data-perihal="${item.perihal}" data-dari="${item.dari}">
+                                        <i class="dw dw-edit2"></i> Edit
                                     </button>
                                     <button class="dropdown-item btn-delete" data-id="${item.id}">
                                         <i class="dw dw-delete-3"></i> Delete
@@ -128,7 +131,7 @@
 
         function loadData() {
             $.ajax({
-                url: '/api/v1/surat',
+                url: '/api/v1/surat/arsip',
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
@@ -190,11 +193,83 @@
         });
 
 
+        $(document).on('click', '.btn-edit', function () {
+            const button = $(this);
+            $('#editmodal input[name="id"]').val(button.data('id'));
+            $('#editmodal input[name="perihal"]').val(button.data('perihal'));
+            $('#editmodal input[name="nomor_surat"]').val(button.data('nomorsurat'));
+            $('#editmodal input[name="nomor_agenda"]').val(button.data('nomoragenda'));
+            $('#editmodal input[name="lampiran"]').val(button.data('lampiran'));
+            $('#editmodal input[name="dari"]').val(button.data('dari'));
+            $('#editmodal select[name="id_user"]').val(button.data('user'));
+            $('#editmodal select[name="id_jenis"]').val(button.data('jenis'));
+            $('#editmodal select[name="is_completed"]').val(button.data('iscompleted'));
+            $('#editmodal select[name="id_sifat"]').val(button.data('sifat'));
+            $('#editmodal select[name="id_status"]').val(button.data('status'));
+            $('#editmodal').modal('show');
+        });
+
+        $('#form-edit').on('submit', function (e) {
+            e.preventDefault();
+
+            const form = this;
+            const id = $(form).find('input[name="id"]').val();
+            const formData = {
+                id_user: $(form).find('select[name="id_user"]').val(),
+                id_jenis: $(form).find('select[name="id_jenis"]').val(),
+                id_sifat: $(form).find('select[name="id_sifat"]').val(),
+                id_status: $(form).find('select[name="id_status"]').val(),
+                nomor_surat: $(form).find('input[name="nomor_surat"]').val(),
+                lampiran: $(form).find('input[name="lampiran"]').val(),
+                nomor_agenda: $(form).find('input[name="nomor_agenda"]').val(),
+                perihal: $(form).find('input[name="perihal"]').val(),
+                dari: $(form).find('input[name="dari"]').val(),
+                is_completed: $(form).find('select[name="is_completed"]').val(),
+                tipe_surat: $(form).find('input[name="tipe_surat"]').val()
+            };
+
+            $.ajax({
+                url: `/api/v1/surat/${id}`,
+                type: 'PUT',
+                dataType: 'json',
+                data: JSON.stringify(formData),
+                processData: false,
+                contentType: 'application/json',
+                success: function (response) {
+                    alert(response.message);
+                    $('#editmodal').modal('hide');
+                    loadData();
+                },
+                error: function (xhr) {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        let errorMessage = '';
+                        if (response.messages) {
+                            for (const key in response.messages) {
+                                errorMessage += `${response.messages[key]}\n`;
+                            }
+                        } else if (response.message) {
+                            errorMessage = response.message;
+                        } else {
+                            errorMessage = 'Terjadi kesalahan saat update.';
+                        }
+                        alert(errorMessage);
+                    } catch (e) {
+                        alert('Gagal memproses respons error.');
+                    }
+                }
+            });
+        });
+
+
 
     $('#searchinput').on('input', function () {
         const keyword = $(this).val().toLowerCase();
         const filtered = filteredData.filter(item =>
-            item.nama_disposisi_kepada.toLowerCase().includes(keyword)
+            item.nomor_surat.toLowerCase().includes(keyword) ||
+            item.user_name.toLowerCase().includes(keyword) ||
+            item.tipe_surat.toLowerCase().includes(keyword) ||
+            item.created_at.toLowerCase().includes(keyword) 
         );
 
         currentPage = 1; // reset to first page

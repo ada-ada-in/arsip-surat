@@ -11,7 +11,7 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">75</div>
+									<div class="weight-700 font-24 text-dark" id="countuser"></div>
 									<div class="font-14 text-secondary weight-500">
 										Users
 									</div>
@@ -28,7 +28,7 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">100</div>
+									<div class="weight-700 font-24 text-dark" id="countsurat"></div>
 									<div class="font-14 text-secondary weight-500">
 										Arsip
 									</div>
@@ -45,7 +45,7 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">40</div>
+									<div class="weight-700 font-24 text-dark" id="suratmasuk"></div>
 									<div class="font-14 text-secondary weight-500">
 										Surat Masuk
 									</div>
@@ -65,7 +65,7 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">50</div>
+									<div class="weight-700 font-24 text-dark" id="suratkeluar"></div>
 									<div class="font-14 text-secondary weight-500">Surat Keluar</div>
 								</div>
 								<div class="widget-icon">
@@ -83,5 +83,73 @@
 					<div id="chart2"></div>
 				</div>
 			</div>
+
+
+			<script>
+
+
+				$.ajax({
+						url: '/api/v1/surat/count',
+						type: 'GET',
+						dataType: 'json',
+						success: function(response) {
+							const surat = response.data;
+
+							$('#countsurat').html(surat);
+						},
+						error: function(xhr, status, error) {
+							console.error('Gagal mengambil data:', error);
+							$('#countsurat').html('0');
+						}
+				});
+
+				$.ajax({
+						url: '/api/v1/surat/countin',
+						type: 'GET',
+						dataType: 'json',
+						success: function(response) {
+							const surat = response.data;
+
+							$('#suratmasuk').html(surat);
+						},
+						error: function(xhr, status, error) {
+							console.error('Gagal mengambil data:', error);
+							$('#suratmasuk').html('0');
+						}
+				});
+
+				$.ajax({
+						url: '/api/v1/surat/countout',
+						type: 'GET',
+						dataType: 'json',
+						success: function(response) {
+							const surat = response.data;
+
+							$('#suratkeluar').html(surat);
+						},
+						error: function(xhr, status, error) {
+							console.error('Gagal mengambil data:', error);
+							$('#suratkeluar').html('0');
+						}
+				});
+
+				
+				$.ajax({
+						url: '/api/v1/user/count',
+						type: 'GET',
+						dataType: 'json',
+						success: function(response) {
+							const surat = response.data;
+
+							$('#countuser').html(surat);
+						},
+						error: function(xhr, status, error) {
+							console.error('Gagal mengambil data:', error);
+							$('#countuser').html('0');
+						}
+				});
+
+
+			</script>
 
 <?= $this->endSection() ?> 

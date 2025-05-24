@@ -184,9 +184,6 @@
                 tipe_surat: $(form).find('input[name="tipe_surat"]').val()
             };
 
-            console.log(formData);
-
-
             $.ajax({
                 url: `/api/v1/surat`,
                 type: 'POST',

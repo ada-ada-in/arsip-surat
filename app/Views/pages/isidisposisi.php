@@ -21,6 +21,8 @@
                     </nav>
                 </div>
                 <div class="col-md-6 col-sm-12  d-flex justify-content-end align-items-start"">
+                <div id="complete" class="btnComplete">
+                </div>
                 <div id="cetak"></div>
                 <button class="btn btn-primary" id="btnSimpan" type="submit">Simpan</button>
                 </div>
@@ -161,6 +163,17 @@
 
                 $('#cetak').html(cetak);
 
+                
+                
+                let completeData = ``
+                
+                complete = `
+                    <button id="btnComplete" class="btn btn-success">Complete</button>
+                `
+
+                $('#complete').html(complete)
+
+
 
                 if (tglterima) {
                     const tglTerimaObj = new Date(tglterima);
@@ -240,8 +253,25 @@
                     }
                 });
 
-
-                
+                $('#btnComplete').on('click', function () {
+                 
+                    $.ajax({
+                        url: `/api/v1/surat/${id}`,
+                        type: 'PUT',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            is_completed: "1",
+                        }),
+                        success: function (res) { 
+                            alert('Data berhasil disimpan!');
+                            window.location.href = '/admin/disposisi'
+                        },
+                        error: function (err) {
+                            alert('Gagal menyimpan data!');
+                            console.error(err);
+                        }
+                    });
+                });
 
                 $.ajax({
                     url: '/api/v1/disposisi-petunjuk',
