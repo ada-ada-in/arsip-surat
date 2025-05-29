@@ -4,7 +4,7 @@
 	<head>
 		<!-- Basic Page Info -->
 		<meta charset="utf-8" />
-		<title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+		<title>Arsip Surat Bawaslu</title>
 		<!-- Mobile Specific Metas -->
 		<meta
 			name="viewport"
@@ -36,12 +36,12 @@
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-md-6 col-lg-7">
-						<img src="/assets/deskapp/vendors/images/login-page-img.png" alt="" />
+						<img src="/images/logo-bawaslu.png" alt="" />
 					</div>
 					<div class="col-md-6 col-lg-5">
 						<div class="login-box bg-white box-shadow border-radius-10">
 							<div class="login-title">
-								<h2 class="text-center text-primary">Register</h2>
+								<h2 class="text-center text-danger">Register</h2>
 							</div>
 							<form id="form-register">
 

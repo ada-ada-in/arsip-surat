@@ -105,9 +105,9 @@
 							data-toggle="dropdown"
 						>
 							<span class="user-icon">
-								<img src="/assets/deskapp/vendors/images/photo1.jpg" alt="" />
+								<i class="dw dw-user1"></i> 
 							</span>
-							<span class="user-name">Ross C. Lopez</span>
+							<span class="user-name" id="name"></span>
 						</a>
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
@@ -133,7 +133,6 @@
 				dataType: 'json',
 				success: function(response) {
 					const data = response.data;
-					console.log(data);
 					let div = '';
 
 					if (Array.isArray(data) && data.length > 0) {
@@ -166,6 +165,9 @@
 		setInterval(() => {
 			notification();
 		}, 5000);
+
+		const name = localStorage.getItem('name')
+		document.getElementById('name').textContent = name;
 
 
 		</script>

@@ -4,7 +4,7 @@
 	<head>
 		<!-- Basic Page Info -->
 		<meta charset="utf-8" />
-		<title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+		<title>Arsip Surat Bawaslu</title>
 
 		<!-- Site favicon -->
 		<link
@@ -60,7 +60,7 @@
 					<div class="col-md-6 col-lg-5">
 						<div class="login-box bg-white box-shadow border-radius-10">
 							<div class="login-title">
-								<h2 class="text-center text-primary">Login</h2>
+								<h2 class="text-center text-danger">Login</h2>
 							</div>
 							<form id="form-login">
 								<div class="input-group custom">
@@ -142,6 +142,11 @@
                     success: function(response){
                         const message = response.message
                         const role = response.role;
+						const id = response.id;
+						const name = response.name;
+
+						localStorage.setItem('id', id);
+						localStorage.setItem('name', name);
                         
                         if(role == 'admin'){
 						

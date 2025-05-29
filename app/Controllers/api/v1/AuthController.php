@@ -39,7 +39,9 @@ class AuthController extends ResourceController
                 'status' => true,
                 'message' => $result['message'],
                 'data' => $result['data'],
-                'role' => $result['data']['role'] ?? null
+                'role' => $result['data']['role'] ?? null,
+                'id' => $result['data']['id'] ?? null,
+                'name' => $result['data']['name'] ?? null
 
             ], 200);
         } catch (\Exception $e) {
