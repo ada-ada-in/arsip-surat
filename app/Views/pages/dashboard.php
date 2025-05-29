@@ -79,7 +79,7 @@
 				</div>
 
                 <div class="bg-white pd-20 card-box mb-30">
-					<h4 class="h4 text-blue">Area Chart</h4>
+					<h4 class="h4 text-blue">Chart Surat</h4>
 					<div id="chart2"></div>
 				</div>
 			</div>

@@ -38,7 +38,9 @@ class AuthController extends ResourceController
             return $this->respond([
                 'status' => true,
                 'message' => $result['message'],
-                'data' => $result['data']
+                'data' => $result['data'],
+                'role' => $result['data']['role'] ?? null
+
             ], 200);
         } catch (\Exception $e) {
             return $this->failServerError($e->getMessage());

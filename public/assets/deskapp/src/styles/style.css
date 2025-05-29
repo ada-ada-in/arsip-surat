@@ -3418,9 +3418,14 @@ body.IE .register-page-wrap .container{
 	padding: 7px 11px;
 	margin: 3px 0;
 }
+
+.btn .btn-primary {
+	background-color: #C62F2D !important;
+}
+
 .contact-directory-box .contact-skill .badge.badge-primary{
-	background: #1b00ff;
-	border-color: #1b00ff;
+	background: #C62F2D;
+	border-color: #C62F2D;
 	-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);

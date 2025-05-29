@@ -106,6 +106,25 @@ class SuratController extends ResourceController
     }
 
 
+    public function getAllSuratArsipData()
+    {
+        try {
+            $result = $this->suratServices->getAllSuratDataServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    
+    }
+
+    
+
+
     public function getSuratNotificationData()
     {
         try {

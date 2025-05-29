@@ -5,26 +5,6 @@
 		<!-- Basic Page Info -->
 		<meta charset="utf-8" />
 		<title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
-
-		<!-- Site favicon -->
-		<link
-			rel="apple-touch-icon"
-			sizes="180x180"
-			href="/assets/deskapp/vendors/images/apple-touch-icon.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="32x32"
-			href="/assets/deskapp/vendors/images/favicon-32x32.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="16x16"
-			href="/assets/deskapp/vendors/images/favicon-16x16.png"
-		/>
-
 		<!-- Mobile Specific Metas -->
 		<meta
 			name="viewport"
@@ -44,7 +24,11 @@
 			href="/assets/deskapp/vendors/styles/icon-font.min.css"
 		/>
 		<link rel="stylesheet" type="text/css" href="/assets/deskapp/vendors/styles/style.css" />
+		<link rel="stylesheet" type="text/css" href="/assets/deskapp/vendors/styles/css.css" />
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+   		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	</head>
+	
 	<body class="login-page">
 		<div
 			class="login-wrap d-flex align-items-center flex-wrap justify-content-center"
@@ -59,12 +43,15 @@
 							<div class="login-title">
 								<h2 class="text-center text-primary">Register</h2>
 							</div>
-							<form>
+							<form id="form-register">
+
+
 								<div class="input-group custom">
 									<input
 										type="text"
 										class="form-control form-control-lg"
-										placeholder="Username"
+										placeholder="Nama Instansi"
+										name="name"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -72,11 +59,14 @@
 										></span>
 									</div>
 								</div>
+
+
                                 <div class="input-group custom">
 									<input
 										type="email"
 										class="form-control form-control-lg"
 										placeholder="Email"
+										name="email"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -84,23 +74,61 @@
 										></span>
 									</div>
 								</div>
-                                <div class="input-group custom">
+
+
+								<div class="input-group custom" hidden>
 									<input
 										type="text"
 										class="form-control form-control-lg"
-										placeholder="Nama Lengkap"
+										placeholder="is_active"
+										name="is_active"
+										value="1"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
-											><i class="icon-copy dw dw-user1"></i
+											><i class="icon-copy dw dw-phone1"></i
 										></span>
 									</div>
 								</div>
+
+
+								<div class="input-group custom" hidden>
+									<input
+										type="text"
+										class="form-control form-control-lg"
+										placeholder="role"
+										name="role"
+										value="user"
+									/>
+									<div class="input-group-append custom">
+										<span class="input-group-text"
+											><i class="icon-copy dw dw-phone1"></i
+										></span>
+									</div>
+								</div>
+
+
+								<div class="input-group custom">
+									<input
+										type="text"
+										class="form-control form-control-lg"
+										placeholder="Handphone"
+										name="handphone"
+									/>
+									<div class="input-group-append custom">
+										<span class="input-group-text"
+											><i class="icon-copy dw dw-phone-call"></i
+										></span>
+									</div>
+								</div>
+
+
 								<div class="input-group custom">
 									<input
 										type="password"
 										class="form-control form-control-lg"
-										placeholder="**********"
+										placeholder="Password"
+										name="password"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -108,11 +136,14 @@
 										></span>
 									</div>
 								</div>
-                                <div class="input-group custom">
+
+
+								<div class="input-group custom">
 									<input
-										type="Confirm Password"
+										type="password"
 										class="form-control form-control-lg"
-										placeholder="**********"
+										placeholder="Confirm Password"
+										name="confirm_password"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -120,19 +151,19 @@
 										></span>
 									</div>
 								</div>
+
+
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="input-group mb-0">
-											<!--
-											use code for form submit
-											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
-										-->
-											<a
+											<button
 												class="btn btn-primary btn-lg btn-block"
-												href="index.html"
-												>Create Account</a
+												type="submit"
+												>Create Account</button
 											>
 										</div>
+
+
 										<div
 											class="font-16 weight-600 pt-10 pb-10 text-center"
 											data-color="#707373"
@@ -142,10 +173,12 @@
 										<div class="input-group mb-0">
 											<a
 												class="btn btn-outline-primary btn-lg btn-block"
-												href="register.html"
+												href="<?= base_url('/auth/login') ?>"
 												>Login</a
 											>
 										</div>
+
+
 									</div>
 								</div>
 							</form>
@@ -154,6 +187,64 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+
+				$(function(){
+
+					function register(){
+						const form = $('#form-register').on('submit', function (e) {
+							e.preventDefault()
+							const form = $(this);
+							const formData = {
+								name: form.find('input[name="name"]').val(),
+								email: form.find('input[name="email"]').val(),
+								is_active: form.find('input[name="is_active"]').val(),
+								handphone: form.find('input[name="handphone"]').val(),
+								role: form.find('input[name="role"]').val(),
+								password: form.find('input[name="password"]').val(),
+								confirm_password: form.find('input[name="confirm_password"]').val()
+							};
+							$.ajax({
+								url: '/api/v1/auth/register',
+								type: 'POST',
+								dataType: 'json',
+								contentType: 'application/json',
+								data: JSON.stringify(formData),
+								success: function(response){
+									const message = response.message
+									alert(message)
+									window.location.href = '/auth/login'
+								},
+								error: function(xhr, status, error){
+									try{
+										const response = JSON.parse(xhr.responseText);
+											let errorMessage = '';
+											if (response.messages) {
+												for (const key in response.messages) {
+													if (response.messages.hasOwnProperty(key)) {
+														errorMessage += `${response.messages[key]}\n`;
+													}
+												}
+											} else if (response.message) {
+												errorMessage = response.message;
+											} else {
+												errorMessage = 'Terjadi kesalahan yang tidak diketahui.';
+											}
+											alert(errorMessage);
+									}catch(e){
+										console.error('Gagal parse response error:', e);
+										alert('Terjadi kesalahan saat memproses respons error.');
+									}
+								}
+							})
+						})
+					}
+
+					register();
+				})
+
+			</script>
 
 		<!-- js -->
 		<script src="/assets/deskapp/vendors/scripts/core.js"></script>

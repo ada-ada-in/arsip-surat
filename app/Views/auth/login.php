@@ -44,6 +44,9 @@
 			href="/assets/deskapp/vendors/styles/icon-font.min.css"
 		/>
 		<link rel="stylesheet" type="text/css" href="/assets/deskapp/vendors/styles/style.css" />
+		<link rel="stylesheet" type="text/css" href="/assets/deskapp/vendors/styles/css.css" />
+		    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+   		 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	</head>
 	<body class="login-page">
 		<div
@@ -59,12 +62,13 @@
 							<div class="login-title">
 								<h2 class="text-center text-primary">Login</h2>
 							</div>
-							<form>
+							<form id="form-login">
 								<div class="input-group custom">
 									<input
-										type="text"
+										type="email"
 										class="form-control form-control-lg"
-										placeholder="Username"
+										placeholder="email"
+										name="email"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -77,6 +81,7 @@
 										type="password"
 										class="form-control form-control-lg"
 										placeholder="**********"
+										name="password"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -84,36 +89,13 @@
 										></span>
 									</div>
 								</div>
-								<div class="row pb-30">
-									<div class="col-6">
-										<div class="custom-control custom-checkbox">
-											<input
-												type="checkbox"
-												class="custom-control-input"
-												id="customCheck1"
-											/>
-											<label class="custom-control-label" for="customCheck1"
-												>Remember</label
-											>
-										</div>
-									</div>
-									<div class="col-6">
-										<div class="forgot-password">
-											<a href="forgot-password.html">Forgot Password</a>
-										</div>
-									</div>
-								</div>
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="input-group mb-0">
-											<!--
-											use code for form submit
-											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
-										-->
-											<a
+											<button
 												class="btn btn-primary btn-lg btn-block"
-												href="index.html"
-												>Sign In</a
+												type="submit"
+												>Sign In</button
 											>
 										</div>
 										<div
@@ -125,7 +107,7 @@
 										<div class="input-group mb-0">
 											<a
 												class="btn btn-outline-primary btn-lg btn-block"
-												href="register.html"
+												href="<?= base_url('/auth/register') ?>"
 												>Register To Create Account</a
 											>
 										</div>
@@ -137,6 +119,108 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+
+    $(function(){
+
+        function login() {
+            const form = $('#form-login').on('submit', function (e) {   
+                e.preventDefault();
+                const form = $(this)
+                const formData = {
+                    email: form.find('input[name="email"]').val(),
+                    password: form.find('input[name="password"]').val()
+                }
+                console.log(formData)
+                $.ajax({
+                    url: '/api/v1/auth/login',
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(response){
+                        const message = response.message
+                        const role = response.role;
+                        
+                        if(role == 'admin'){
+						
+                            window.location.href = '/admin/dashboard'
+                        } else {
+                            window.location.href = '/'
+                        }
+
+                        alert(response.message)
+                    },  
+                    error: function(xhr, error, status){
+                        try{
+                                const response = JSON.parse(xhr.responseText);
+                                    let errorMessage = '';
+                                    if (response.messages) {
+                                        for (const key in response.messages) {
+                                            if (response.messages.hasOwnProperty(key)) {
+                                                errorMessage += `${response.messages[key]}\n`;
+                                            }
+                                        }
+                                    } else if (response.message) {
+                                        errorMessage = response.message;
+                                    } else {
+                                        errorMessage = 'Terjadi kesalahan yang tidak diketahui.';
+                                    }
+                                    alert(errorMessage);
+                            }catch(e){
+                                console.error('Gagal parse response error:', e);
+                                alert('Terjadi kesalahan saat memproses respons error.');
+                            }
+                    }
+                })
+            })
+        }
+
+
+        login()
+
+        function logout() {
+            $('#logout').on('click', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/api/v1/auth/logout',
+                    type: 'POST',
+                    success: function(response) {
+                        const message = response.message;
+                        alert(message);
+                        window.location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            let errorMessage = '';
+                            if (response.messages) {
+                                for (const key in response.messages) {
+                                    if (response.messages.hasOwnProperty(key)) {
+                                        errorMessage += `${response.messages[key]}\n`;
+                                    }
+                                }
+                            } else if (response.message) {
+                                errorMessage = response.message;
+                            } else {
+                                errorMessage = 'Terjadi kesalahan yang tidak diketahui.';
+                            }
+                            alert(errorMessage);
+                        } catch (e) {
+                            console.error('Gagal parse response error:', e);
+                            alert('Terjadi kesalahan saat memproses respons error.');
+                        }
+                    }
+                });
+            });
+        }
+
+        logout(); 
+
+    })
+
+</script>
 
 		<!-- js -->
 		<script src="/assets/deskapp/vendors/scripts/core.js"></script>

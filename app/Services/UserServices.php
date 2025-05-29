@@ -32,7 +32,7 @@ class UserServices {
             ],
             'role' => [
                 'label' => 'Role',
-                'rules' => 'required|in_list[super_admin,admin,user]',
+                'rules' => 'required|in_list[admin,user]',
                 'default' => 'user'
             ],
             'handphone' => [

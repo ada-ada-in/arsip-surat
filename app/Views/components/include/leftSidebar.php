@@ -57,6 +57,12 @@
 							</a>
 						</li>
 						<li class="dropdown">
+							<a href="<?= url_to('backup') ?>" class="dropdown-toggle no-arrow">
+								<span class="micon dw dw-file"></span
+								><span class="mtext">Back Up</span>
+							</a>
+						</li>
+						<li class="dropdown">
 							<a href="<?= url_to('pengguna') ?>" class="dropdown-toggle no-arrow">
 								<span class="micon dw dw-user1"></span
 								><span class="mtext">Pengguna</span>

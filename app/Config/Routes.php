@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // admin
-$routes->group('admin', static function($routes) {
+$routes->group('admin', ['filter' => 'auth'], static function($routes) {
     $routes->get('dashboard', 'PagesController::dashboard', ['as' => 'admin']);
     $routes->get('surat-masuk', 'PagesController::suratMasuk', ['as' => 'suratMasuk']);
     $routes->get('surat-keluar', 'PagesController::suratKeluar', ['as' => 'suratKeluar']);
@@ -22,8 +22,8 @@ $routes->group('admin', static function($routes) {
     $routes->get('disposisi/isidisposisi', 'PagesController::isidisposisi', ['as' => 'isidisposisi']); 
     $routes->get('disposisi/print', 'PagesController::print', ['as' => 'print']); 
     $routes->get('statussurat', 'PagesController::statussurat', ['as' => 'statussurat']); 
+    $routes->get('backup', 'PagesController::backup', ['as' => 'backup']); 
 });
-
 
 //  auth
 $routes->group('auth', static function($routes){
@@ -98,6 +98,7 @@ $routes->group('api/v1', static function($routes) {
     $routes->group('surat', static function($routes) {
         $routes->post('', 'api\v1\SuratController::addSurat', ['as' => 'api.user.addSurat']);
         $routes->get('', 'api\v1\SuratController::getSuratData', ['as' => 'api.user.getSuratData']);
+        $routes->get('all', 'api\v1\SuratController::getAllSuratArsipData', ['as' => 'api.user.getAllSuratArsipData']);
         $routes->get('notification', 'api\v1\SuratController::getSuratNotificationData', ['as' => 'api.user.getSuratNotificationData ']);
         $routes->get('count', 'api\v1\SuratController::countSuratData', ['as' => 'api.user.countSuratData ']);
         $routes->get('countin', 'api\v1\SuratController::countSuratMasukArsipData', ['as' => 'api.user.countSuratMasukArsipData ']);
@@ -109,6 +110,14 @@ $routes->group('api/v1', static function($routes) {
         $routes->put('(:num)', 'api\v1\SuratController::updateSuratById/$1', ['as' => 'api.user.updateSuratById']);
         $routes->delete('(:num)', 'api\v1\SuratController::deleteSurat/$1', ['as' => 'api.user.deleteSurat']);
     });
+
+
+        $routes->group('backup', static function($routes) {
+        $routes->post('', 'api\v1\BackUpController::bakcup', ['as' => 'api.user.bakcup']);
+        $routes->get('', 'api\v1\BackUpController::listBackups', ['as' => 'api.user.listBackups']);
+        $routes->get('download/(:any)', 'api\v1\BackUpController::download/$1', ['as' => 'api.user.download']);
+    });
+
 
 });
  

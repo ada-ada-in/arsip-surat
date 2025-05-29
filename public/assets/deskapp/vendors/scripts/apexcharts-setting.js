@@ -65,46 +65,81 @@ var options = {
 var chart = new ApexCharts(document.querySelector("#chart1"), options);
 chart.render();
 
-var options2 = {
-	series: [{
-		name: 'series1',
-		data: [31, 40, 28, 51, 42, 109, 100]
-	}, {
-		name: 'series2',
-		data: [11, 32, 45, 32, 34, 52, 41]
-	}],
-	chart: {
-		height: 350,
-		type: 'area',
-		toolbar: {
-			show: false,
+function renderSuratChart(data) {
+	const rekap = {};
+
+	// Rekap manual per tanggal dan tipe_surat
+	data.forEach(item => {
+		const dateOnly = new Date(item.created_at).toISOString().split('T')[0];
+		const key = `${dateOnly}_${item.tipe_surat}`;
+		if (!rekap[key]) {
+			rekap[key] = 0;
 		}
-	},
-	grid: {
-		show: false,
-		padding: {
-			left: 0,
-			right: 0
-		}
-	},
-	dataLabels: {
-		enabled: false
-	},
-	stroke: {
-		curve: 'smooth'
-	},
-	xaxis: {
-		type: 'datetime',
-		categories: ["2020-09-19T00:00:00.000Z", "2020-09-19T01:30:00.000Z", "2020-09-19T02:30:00.000Z", "2020-09-19T03:30:00.000Z", "2020-09-19T04:30:00.000Z", "2020-09-19T05:30:00.000Z", "2020-09-19T06:30:00.000Z"]
-	},
-	tooltip: {
-		x: {
-			format: 'dd/MM/yy HH:mm'
+		rekap[key]++;
+	});
+
+	// Ambil rentang tanggal dari data
+	const allDates = data.map(item => new Date(item.created_at).toISOString().split('T')[0]);
+	const minDate = new Date(Math.min(...allDates.map(date => new Date(date))));
+	const maxDate = new Date(Math.max(...allDates.map(date => new Date(date))));
+
+	// Buat array semua tanggal dari min ke max
+	const dates = [];
+	for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
+		const isoDate = d.toISOString().split('T')[0];
+		dates.push(isoDate);
+	}
+
+	// Siapkan data series
+	const masukSeries = dates.map(date => rekap[`${date}_masuk`] || 0);
+	const keluarSeries = dates.map(date => rekap[`${date}_keluar`] || 0);
+
+	// Render chart
+	const options2 = {
+		series: [
+			{ name: 'Surat Masuk', data: masukSeries },
+			{ name: 'Surat Keluar', data: keluarSeries }
+		],
+		chart: {
+			height: 350,
+			type: 'area',
+			toolbar: { show: false }
 		},
+		grid: {
+			show: false,
+			padding: { left: 0, right: 0 }
+		},
+		dataLabels: { enabled: false },
+		stroke: { curve: 'smooth' },
+		xaxis: {
+			categories: dates
+		},
+		tooltip: {
+			x: { format: 'dd/MM/yy' }
+		}
+	};
+	
+
+	const chart = new ApexCharts(document.querySelector("#chart2"), options2);
+	chart.render();
+}
+
+// Ambil data dari API
+$.ajax({
+	url: '/api/v1/surat/all',
+	type: 'GET',
+	dataType: 'json',
+	success: function(response) {
+		renderSuratChart(response.data);
 	},
-};
-var chart = new ApexCharts(document.querySelector("#chart2"), options2);
-chart.render();
+	error: function(err) {
+		console.error('Gagal mengambil data chart surat:', err);
+	}
+});
+
+
+
+
 
 var options3 = {
 	series: [{

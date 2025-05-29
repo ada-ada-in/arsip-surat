@@ -64,6 +64,10 @@ class PagesController extends BaseController
     {
         return view('pages/print');
     }
+    public function backup(): string
+    {
+        return view('pages/backup');
+    }
 
 
     // auth
