@@ -70,6 +70,34 @@ class PagesController extends BaseController
     }
 
 
+    // user
+    public function user(): string
+    {
+        return view('layouth/user_layout');
+    }
+    public function userDashboard(): string
+    {
+        return view('UserPages/dashboard');
+    }
+    public function userSuratMasuk(): string
+    {
+        return view('UserPages/surat-masuk');
+    }
+    public function userSuratKeluar(): string
+    {
+        return view('UserPages/surat-keluar');
+    }
+    public function userArsip(): string
+    {
+        return view('UserPages/arsip');
+    }
+        public function userProfile(): string 
+    {
+        return view('userPages/profile');
+    }
+    
+
+
     // auth
     public function login(): string
     {

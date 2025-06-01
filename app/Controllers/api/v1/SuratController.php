@@ -89,10 +89,56 @@ class SuratController extends ResourceController
         }
     }
 
+    public function getSuratMasukByUserData($id)
+    {
+        try {
+            $result = $this->suratServices->getAllSuratDataUserServices($id);
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
+    public function getSuratKeluarByUserData($id)
+    {
+        try {
+            $result = $this->suratServices->getAllSuratKeluarDataUserServices($id);
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
     public function getSuratArsipData()
     {
         try {
             $result = $this->suratServices->getSuratArsipDataServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    
+    }
+
+        public function getSuratArsipUserData($id)
+    {
+        try {
+            $result = $this->suratServices->getSuratArsipUserDataServices($id);
 
             return $this->respond([
                 'status' => true,

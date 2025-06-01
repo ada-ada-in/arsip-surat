@@ -16,7 +16,7 @@ class AuthFilter implements FilterInterface
         }
 
         if (session()->get('role') !== 'admin') {
-            return redirect()->to('/unauthorized');
+            return redirect()->to('/auth/login')->with('error', 'Anda tidak memiliki akses ke halaman ini.');   
         }
     }
     

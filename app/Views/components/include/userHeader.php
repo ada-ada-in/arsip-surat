@@ -76,26 +76,6 @@
 						</a>
 					</div>
 				</div>
-				<div class="user-notification">
-					<div class="dropdown">
-						<a
-							class="dropdown-toggle no-arrow"
-							href="#"
-							role="button"
-							data-toggle="dropdown"
-						>
-							<i class="icon-copy dw dw-notification"></i>
-							<span class="badge notification-active"></span>
-						</a>
-						<div class="dropdown-menu dropdown-menu-right">
-							<div class="notification-list mx-h-350 customscroll">
-								<ul id="notification">
-										<!-- data -->
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
 				<div class="user-info-dropdown">
 					<div class="dropdown">
 						<a
@@ -124,48 +104,11 @@
 		</div>
 
 <script>
-const notification = () => {
-    $.ajax({
-        url: '/api/v1/surat/notification',
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            const data = response.data;
-            let div = '';
 
-            if (Array.isArray(data) && data.length > 0) {
-                data.forEach((item) => {
-                    div += `
-                        <li>
-                            <a href="/admin/disposisi/isidisposisi?id=${item.id}">
-                                <h3>Pengirim : ${item.user_email}</h3>
-                                <h5>Dari : ${item.dari}</h5>
-                                <p>No. Surat : ${item.nomor_surat}</p>
-                            </a>
-                        </li>
-                    `;
-                });
-            } else {
-                div = `<li><a href="#"><p>Tidak ada notifikasi</p></a></li>`;
-            }
-
-            $('#notification').html(div);
-        },
-        error: function(xhr, status, error) {
-            console.error('Terjadi kesalahan:', error);
-            $('#notification').html('<li><a href="#"><p>Gagal memuat notifikasi</p></a></li>');
-        }
-    });
-}
-
-notification();
-setInterval(notification, 5000);
-
-// Set nama user jika ada di localStorage
 const name = localStorage.getItem('name') || '';
 if (document.getElementById('name')) {
     document.getElementById('name').textContent = name;
-}
+}   
 
 // Logout
 $('#logout').on('click', function() {

@@ -152,7 +152,7 @@
 						
                             window.location.href = '/admin/dashboard'
                         } else {
-                            window.location.href = '/'
+                            window.location.href = '/user/dashboard'
                         }
 
                         alert(response.message)

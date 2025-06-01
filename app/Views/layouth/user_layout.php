@@ -4,13 +4,13 @@
 	<?= view('components/include/head') ?>
 	<body>
     <!-- header -->
-    <?= view('components/include/header') ?>
+    <?= view('components/include/userHeader') ?>
 
     <!-- sidebar -->
      <?= view('components/include/sidebar') ?>
 
 		<!-- left-sidebar -->
-     <?= view('components/include/leftSidebar') ?>
+     <?= view('components/include/userSidebar') ?>
 		<div class="mobile-menu-overlay"></div>
 
     <!-- main -->
@@ -26,6 +26,7 @@
     		
     
   <?= view('components/include/footer') ?>
+  
 
   <?= $this->rendersection('script') ?>
 	</body>

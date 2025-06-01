@@ -6,6 +6,18 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
+
+// user
+$routes->group('user', static function($routes) {
+    $routes->get('dashboard', 'PagesController::userDashboard', ['as' => 'userDashboard']);
+    $routes->get('surat-masuk', 'PagesController::userSuratMasuk', ['as' => 'userSuratMasuk']);
+    $routes->get('surat-keluar', 'PagesController::userSuratKeluar', ['as' => 'userSuratKeluar']);
+    $routes->get('arsip', 'PagesController::userArsip', ['as' => 'userArsip']);
+    $routes->get('disposisi/print', 'PagesController::print', ['as' => 'print']); 
+    $routes->get('profile', 'PagesController::userProfile', ['as' => 'userProfile']); 
+});     
+
+
 // admin
 $routes->group('admin', ['filter' => 'auth'], static function($routes) {
     $routes->get('dashboard', 'PagesController::dashboard', ['as' => 'admin']);
@@ -42,6 +54,7 @@ $routes->group('users', static function($routes){
 $routes->group('api/v1', static function($routes) {
     $routes->group('auth', static function($routes) {
         $routes->post('login', 'Api\V1\AuthController::login', ['as' => 'api.auth.login']);
+        $routes->post('logout', 'Api\V1\AuthController::logout', ['as' => 'logout']);
         $routes->post('register', 'Api\V1\UserController::addUser', ['as' => 'api.auth.addUser']);
     });
 
@@ -104,8 +117,11 @@ $routes->group('api/v1', static function($routes) {
         $routes->get('countin', 'api\v1\SuratController::countSuratMasukArsipData', ['as' => 'api.user.countSuratMasukArsipData ']);
         $routes->get('countout', 'api\v1\SuratController::countSuratKeluarArsipData', ['as' => 'api.user.countSuratKeluarArsipData ']);
         $routes->get('arsip', 'api\v1\SuratController::getSuratArsipData', ['as' => 'api.user.getSuratArsipData']);
+        $routes->get('arsip/user/(:num)', 'api\v1\SuratController::getSuratArsipUserData/$1', ['as' => 'api.user.getSuratArsipUserData']);
         $routes->get('masuk', 'api\v1\SuratController::getSuratMasukData', ['as' => 'api.user.getSuratMasukData']);
         $routes->get('keluar', 'api\v1\SuratController::getSuratKeluarData', ['as' => 'api.user.getSuratKeluarData']);
+        $routes->get('masuk/user/(:num)', 'api\v1\SuratController::getSuratMasukByUserData/$1', ['as' => 'api.user.getSuratMasukByUserData']);
+        $routes->get('keluar/user/(:num)', 'api\v1\SuratController::getSuratKeluarByUserData/$1', ['as' => 'api.user.getSuratKeluarByUserData']);
         $routes->get('(:num)', 'api\v1\SuratController::getSuratById/$1', ['as' => 'api.user.getSuratById']);
         $routes->put('(:num)', 'api\v1\SuratController::updateSuratById/$1', ['as' => 'api.user.updateSuratById']);
         $routes->delete('(:num)', 'api\v1\SuratController::deleteSurat/$1', ['as' => 'api.user.deleteSurat']);

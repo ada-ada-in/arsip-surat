@@ -150,6 +150,75 @@ class SuratServices {
         ];
     }
 
+
+        public function getAllSuratDataUserServices($id)
+    {
+        $data = $this->suratmodel
+        ->select(
+            'surat.*, users.name as user_name, 
+            users.email as user_email,
+            jenis_laporan.nama_jenis_laporan as nama_jenis_laporan, 
+            sifat_laporan.nama_sifat_laporan as nama_sifat_laporan, 
+            status_laporan.nama_status_laporan as nama_status_laporan, 
+            disposisi_kepada.nama_disposisi_kepada as nama_disposisi_kepada, 
+            disposisi_petunjuk.nama_disposisi_petunjuk as nama_disposisi_petunjuk')
+        ->join('users', 'users.id = surat.id_user')
+        ->join('jenis_laporan', 'jenis_laporan.id = surat.id_jenis')
+        ->join('sifat_laporan', 'sifat_laporan.id = surat.id_sifat')
+        ->join('status_laporan', 'status_laporan.id = surat.id_status')
+        ->join('disposisi_kepada', 'disposisi_kepada.id = surat.id_disposisi_kepada', 'left')
+        ->join('disposisi_petunjuk', 'disposisi_petunjuk.id = surat.id_disposisi_petunjuk', 'left')
+        ->where('surat.id_user', $id)
+        ->where('tipe_surat', 'masuk')
+        ->orderBy('created_at', 'DESC')->findAll();
+
+        if (empty($data)) {
+            return [
+                'status' => true,   
+                'message' => 'Data surat  kosong'
+            ];
+        }
+
+        return [
+            'status' => true,
+            'data' => $data
+        ];
+    }
+
+        public function getAllSuratKeluarDataUserServices($id)
+    {
+        $data = $this->suratmodel
+        ->select(
+            'surat.*, users.name as user_name, 
+            users.email as user_email,
+            jenis_laporan.nama_jenis_laporan as nama_jenis_laporan, 
+            sifat_laporan.nama_sifat_laporan as nama_sifat_laporan, 
+            status_laporan.nama_status_laporan as nama_status_laporan, 
+            disposisi_kepada.nama_disposisi_kepada as nama_disposisi_kepada, 
+            disposisi_petunjuk.nama_disposisi_petunjuk as nama_disposisi_petunjuk')
+        ->join('users', 'users.id = surat.id_user')
+        ->join('jenis_laporan', 'jenis_laporan.id = surat.id_jenis')
+        ->join('sifat_laporan', 'sifat_laporan.id = surat.id_sifat')
+        ->join('status_laporan', 'status_laporan.id = surat.id_status')
+        ->join('disposisi_kepada', 'disposisi_kepada.id = surat.id_disposisi_kepada', 'left')
+        ->join('disposisi_petunjuk', 'disposisi_petunjuk.id = surat.id_disposisi_petunjuk', 'left')
+        ->where('surat.id_user', $id)
+        ->where('tipe_surat', 'keluar')
+        ->orderBy('created_at', 'DESC')->findAll();
+
+        if (empty($data)) {
+            return [
+                'status' => true,   
+                'message' => 'Data surat  kosong'
+            ];
+        }
+
+        return [
+            'status' => true,
+            'data' => $data
+        ];
+    }
+
     public function countSuratServices(){
 
         $data = $this->suratmodel->countAllResults();
@@ -221,6 +290,40 @@ class SuratServices {
         ->join('disposisi_kepada', 'disposisi_kepada.id = surat.id_disposisi_kepada', 'left')
         ->join('disposisi_petunjuk', 'disposisi_petunjuk.id = surat.id_disposisi_petunjuk', 'left')
         ->where('is_completed', '1')
+        ->orderBy('created_at', 'DESC')->findAll();
+
+        if (empty($data)) {
+            return [
+                'status' => true,   
+                'message' => 'Data surat  kosong'
+            ];
+        }
+
+        return [
+            'status' => true,
+            'data' => $data
+        ];
+    }
+
+    public function getSuratArsipUserDataServices($id)
+    {
+        $data = $this->suratmodel
+        ->select(
+            'surat.*, users.name as user_name, 
+            users.email as user_email,
+            jenis_laporan.nama_jenis_laporan as nama_jenis_laporan, 
+            sifat_laporan.nama_sifat_laporan as nama_sifat_laporan, 
+            status_laporan.nama_status_laporan as nama_status_laporan, 
+            disposisi_kepada.nama_disposisi_kepada as nama_disposisi_kepada, 
+            disposisi_petunjuk.nama_disposisi_petunjuk as nama_disposisi_petunjuk')
+        ->join('users', 'users.id = surat.id_user')
+        ->join('jenis_laporan', 'jenis_laporan.id = surat.id_jenis')
+        ->join('sifat_laporan', 'sifat_laporan.id = surat.id_sifat')
+        ->join('status_laporan', 'status_laporan.id = surat.id_status')
+        ->join('disposisi_kepada', 'disposisi_kepada.id = surat.id_disposisi_kepada', 'left')
+        ->join('disposisi_petunjuk', 'disposisi_petunjuk.id = surat.id_disposisi_petunjuk', 'left')
+        ->where('is_completed', '1')
+        ->where('surat.id_user', $id)
         ->orderBy('created_at', 'DESC')->findAll();
 
         if (empty($data)) {
