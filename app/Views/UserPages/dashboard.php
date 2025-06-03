@@ -67,7 +67,7 @@
 
 
 				$.ajax({
-						url: '/api/v1/surat/count',
+						url: '/api/v1/surat/count/users',
 						type: 'GET',
 						dataType: 'json',
 						success: function(response) {
@@ -82,7 +82,7 @@
 				});
 
 				$.ajax({
-						url: '/api/v1/surat/countin',
+						url: '/api/v1/surat/countin/users',
 						type: 'GET',
 						dataType: 'json',
 						success: function(response) {
@@ -97,7 +97,7 @@
 				});
 
 				$.ajax({
-						url: '/api/v1/surat/countout',
+						url: '/api/v1/surat/countout/users',
 						type: 'GET',
 						dataType: 'json',
 						success: function(response) {

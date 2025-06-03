@@ -92,7 +92,7 @@
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
 						>
-							<a class="dropdown-item" href="<?= url_to('profile') ?>"
+							<a class="dropdown-item" href="<?= base_url('/user/profile') ?>"
 								><i class="dw dw-user1"></i> Profile</a
 							>
 							<button type="submit" id="logout" class="dropdown-item"><i class="dw dw-logout"></i> Log Out</button

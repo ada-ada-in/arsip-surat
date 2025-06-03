@@ -95,6 +95,10 @@ class PagesController extends BaseController
     {
         return view('userPages/profile');
     }
+        public function userPrint(): string 
+    {
+        return view('userPages/print');
+    }
     
 
 

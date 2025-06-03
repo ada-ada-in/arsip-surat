@@ -270,7 +270,64 @@ class SuratServices {
         ];
     }
 
+    public function countUserSuratServices(){
+        $data = $this->suratmodel
+        ->where('is_completed', '1')
+        ->where('id_user', session()->get('id'))
+        ->countAllResults();
 
+        if(empty($data)){
+            return [
+                'status' => true,   
+                'message' => 'Data surat  kosong'
+            ];
+        }
+
+        return [
+            'status' => true,   
+            'data' => $data
+        ];
+    }
+    
+    public function countUserSuratMasukServices(){
+        
+        $data = $this->suratmodel
+        ->where('tipe_surat', 'masuk')
+        ->where('id_user', session()->get('id'))
+        ->countAllResults();
+
+        if(empty($data)){
+            return [
+                'status' => true,   
+                'message' => 'Data surat  kosong'
+            ];
+        }
+
+        return [
+            'status' => true,   
+            'data' => $data
+        ];
+    }
+
+    public function countUserSuratKeluarServices(){
+        
+        $data = $this->suratmodel
+        ->where('tipe_surat', 'keluar')
+        ->where('id_user', session()->get('id'))
+        ->countAllResults();
+
+        if(empty($data)){
+            return [
+                'status' => true,   
+                'message' => 'Data surat  kosong'
+            ];
+        }
+
+        return [
+            'status' => true,   
+            'data' => $data
+        ];
+    }
     
     public function getSuratArsipDataServices()
     {

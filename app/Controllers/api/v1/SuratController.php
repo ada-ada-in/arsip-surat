@@ -218,6 +218,60 @@ class SuratController extends ResourceController
         }
     }
 
+
+
+
+    public function countUserSuratData()
+    {
+        try {
+            $result = $this->suratServices->countUserSuratServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
+
+
+    public function countUserSuratMasukArsipData()
+    {
+        try {
+            $result = $this->suratServices->countUserSuratMasukServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
+
+    public function countUserSuratKeluarArsipData()
+    {
+        try {
+            $result = $this->suratServices->countUserSuratKeluarServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
+
+    
+
     public function countSuratData()
     {
         try {
@@ -233,6 +287,8 @@ class SuratController extends ResourceController
         }
     }
 
+
+
         public function getSuratKeluarData()
     {
         try {
@@ -247,6 +303,8 @@ class SuratController extends ResourceController
             return $this->failServerError($e->getMessage());
         }
     }
+
+
 
     public function getSuratById($id)
     {

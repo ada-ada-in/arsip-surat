@@ -13,7 +13,7 @@ $routes->group('user', static function($routes) {
     $routes->get('surat-masuk', 'PagesController::userSuratMasuk', ['as' => 'userSuratMasuk']);
     $routes->get('surat-keluar', 'PagesController::userSuratKeluar', ['as' => 'userSuratKeluar']);
     $routes->get('arsip', 'PagesController::userArsip', ['as' => 'userArsip']);
-    $routes->get('disposisi/print', 'PagesController::print', ['as' => 'print']); 
+    $routes->get('disposisi/print', 'PagesController::userPrint', ['as' => 'userPrint']); 
     $routes->get('profile', 'PagesController::userProfile', ['as' => 'userProfile']); 
 });     
 
@@ -114,8 +114,11 @@ $routes->group('api/v1', static function($routes) {
         $routes->get('all', 'api\v1\SuratController::getAllSuratArsipData', ['as' => 'api.user.getAllSuratArsipData']);
         $routes->get('notification', 'api\v1\SuratController::getSuratNotificationData', ['as' => 'api.user.getSuratNotificationData ']);
         $routes->get('count', 'api\v1\SuratController::countSuratData', ['as' => 'api.user.countSuratData ']);
+        $routes->get('count/users', 'api\v1\SuratController::countUserSuratData', ['as' => 'api.user.countUserSuratData ']);
         $routes->get('countin', 'api\v1\SuratController::countSuratMasukArsipData', ['as' => 'api.user.countSuratMasukArsipData ']);
+        $routes->get('countin/users', 'api\v1\SuratController::countUserSuratMasukArsipData', ['as' => 'api.user.countUserSuratMasukArsipData ']);
         $routes->get('countout', 'api\v1\SuratController::countSuratKeluarArsipData', ['as' => 'api.user.countSuratKeluarArsipData ']);
+        $routes->get('countout/users', 'api\v1\SuratController::countUserSuratKeluarArsipData', ['as' => 'api.user.countUserSuratKeluarArsipData ']);
         $routes->get('arsip', 'api\v1\SuratController::getSuratArsipData', ['as' => 'api.user.getSuratArsipData']);
         $routes->get('arsip/user/(:num)', 'api\v1\SuratController::getSuratArsipUserData/$1', ['as' => 'api.user.getSuratArsipUserData']);
         $routes->get('masuk', 'api\v1\SuratController::getSuratMasukData', ['as' => 'api.user.getSuratMasukData']);
