@@ -50,16 +50,14 @@
 	</head>
 	<body class="login-page">
 		<div
-			class="login-wrap d-flex align-items-center flex-wrap justify-content-center"
+			class="login-wrap d-flex align-items-center flex-wrap justify-content-center" 	style="background-image: url('/images/background-bawaslu.png'); background-size: cover;background-position: center;  background-repeat: no-repeat; width: 100vw; height: 100vh;"
 		>
 			<div class="container">
 				<div class="row align-items-center">
-					<div class="col-md-6 col-lg-7">
-						<img src="/images/logo-bawaslu.png" alt="" />
-					</div>
-					<div class="col-md-6 col-lg-5">
-						<div class="login-box bg-white box-shadow border-radius-10">
-							<div class="login-title">
+						<div class="col-md-12 col-lg-12" style="opacity: 0.9;">
+							<div class="login-box bg-white box-shadow border-radius-10 mx-auto">
+							<img style="margin-bottom: 40px; width: 80%;" class="d-block mx-auto"  src="/images/logo-bawaslu.png"/>
+							<div class="login-title" >
 								<h2 class="text-center text-danger">Login</h2>
 							</div>
 							<form id="form-login">

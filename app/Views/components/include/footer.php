@@ -1,11 +1,7 @@
+<script src="/assets/deskapp/vendors/scripts/core.js"></script>
 		<script src="/assets/deskapp/vendors/scripts/script.min.js"></script>
 		<script src="/assets/deskapp/vendors/scripts/process.js"></script>
 		<script src="/assets/deskapp/vendors/scripts/layout-settings.js"></script>
-		<script src="/assets/deskapp/vendors/scripts/core.js"></script>
-		<script src="/assets/deskapp/vendors/scripts/script.min.js"></script>
-		<script src="/assets/deskapp/vendors/scripts/process.js"></script>
-		<script src="/assets/deskapp/vendors/scripts/layout-settings.js"></script>
-
 		<!-- buttons for Export datatable -->
 		<!-- Datatable Setting js -->
 		
@@ -22,5 +18,3 @@
 				style="display: none; visibility: hidden"
 			></iframe
 		></noscript>
-
-		<!-- End Google Tag Manager (noscript) -->

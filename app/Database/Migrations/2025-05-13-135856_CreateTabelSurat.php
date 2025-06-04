@@ -11,15 +11,12 @@ class CreateTabelSurat extends Migration
         $this->forge->addField([
             'id'          => [
                 'type'           => 'INT',
-                'constraint'     => 11,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
             'id_user'    => [
                 'type'       => 'INT',
-                'constraint' => 11,
                 'unsigned'   => true,
-                'null'       => false,
             ],
             'id_jenis'    => [
                 'type'       => 'INT',
@@ -101,12 +98,12 @@ class CreateTabelSurat extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_jenis', 'jenis_laporan', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_sifat', 'sifat_laporan', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_status', 'status_laporan', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_disposisi_kepada', 'disposisi_kepada', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_disposisi_petunjuk', 'disposisi_petunjuk', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('surat');
     }
 

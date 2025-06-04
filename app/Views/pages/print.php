@@ -370,7 +370,7 @@
   setTimeout(() => {
     window.print();
     $('body').removeClass('printing');
-  }, 500);
+  }, 1200);
 }
 
 document.addEventListener('keydown', (e) => {
