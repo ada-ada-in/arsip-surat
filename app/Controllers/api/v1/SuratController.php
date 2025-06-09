@@ -15,31 +15,48 @@ class SuratController extends ResourceController
     }
 
     public function addSurat()
-    {
-        try {
-            $data = $this->request->getJSON(true);
+        {
+            try {
+                if (str_contains($this->request->getHeaderLine('Content-Type'), 'application/json')) {
+                    $data = (array) $this->request->getJSON();
+                } else {                                               
+                    $data = $this->request->getPost();
+                }
 
-            if (empty($data)) {
-                return $this->fail([
-                    'status' => false,
-                    'message' => 'No data received.'
-                ], 400);
+                if (empty($data)) {
+                    return $this->fail(['status' => false, 'message' => 'No data received.'], 400);
+                }
+
+                $file = $this->request->getFile('link_surat');
+                if ($file && $file->isValid() && !$file->hasMoved()) {
+                    $uploadPath = ROOTPATH . 'public/uploads/surat';
+                    if (! is_dir($uploadPath)) {
+                        mkdir($uploadPath, 0755, true);
+                    }
+                    $newName = $file->getRandomName();
+                    $file->move($uploadPath, $newName);
+
+                    $data['link_surat'] = 'uploads/surat/' . $newName;
+
+                    
+                }
+
+                $result = $this->suratServices->addSuratServices($data); 
+
+                if (!$result['status']) {
+                    return $this->fail($result['errors'], 400);
+                }
+
+                return $this->respondCreated([
+                    'status'  => true,
+                    'message' => $result['message'],
+                ]);
+
+            } catch (\Throwable $e) {
+                return $this->failServerError($e->getMessage());
             }
-
-            $result = $this->suratServices->addsuratServices($data);
-
-            if (!$result['status']) {
-                return $this->fail($result['errors'], 400);
-            }
-
-            return $this->respondCreated([
-                'status' => true,
-                'message' => $result['message']
-            ]);
-        } catch (\Exception $e) {
-            return $this->failServerError($e->getMessage());
         }
-    }
+
 
     public function deleteSurat($id)
     {
@@ -327,31 +344,51 @@ class SuratController extends ResourceController
 
 
 
-    public function updateSuratById($id)
-    {
-        try {
-            $data = $this->request->getJSON(true);
+       public function updateSuratById($id)
+        {
+            try {
+                if (str_contains($this->request->getHeaderLine('Content-Type'), 'application/json')) {
+                    $data = (array) $this->request->getJSON();
+                } else {                                               
+                    $data = $this->request->getPost();
+                }
 
-            if (empty($data)) {
-                return $this->fail([
-                    'status' => false,
-                    'message' => 'No data provided for update.'
-                ], 400);
+                if (empty($data)) {
+                    return $this->fail(['status' => false, 'message' => 'No data received.'], 400);
+                }
+
+
+                $file = $this->request->getFile('link_surat');
+                if ($file && $file->isValid() && !$file->hasMoved()) {
+                    $uploadPath = ROOTPATH . 'public/uploads/surat';
+
+                    if (!is_dir($uploadPath)) {
+                        mkdir($uploadPath, 0755, true);
+                    }
+
+                    $newName = $file->getRandomName();
+                    $file->move($uploadPath, $newName);
+
+                    $data['link_surat'] = 'uploads/surat/' . $newName;
+                }
+
+                $result = $this->suratServices->updateDataBySuratIdServices($id, $data);
+
+                if (!$result['status']) {
+                    return $this->fail([
+                        'status' => false,
+                        'message' => $result['message'] ?? 'Gagal mengupdate data.'
+                    ], 400);
+                }
+
+                return $this->respondUpdated([
+                    'status' => true,
+                    'data' => $result['data'],
+                    'message' => 'Data updated successfully.'
+                ]);
+            } catch (\Exception $e) {
+                return $this->failServerError($e->getMessage());
             }
-
-            $result = $this->suratServices->updateDataBySuratIdServices($id, $data);
-
-            if (!$result['status']) {
-                return $this->fail($result['errors'], 400);
-            }
-
-            return $this->respondUpdated([
-                'status' => true,
-                'data' => $result['data'],
-                'message' => 'Data updated successfully.'
-            ]);
-        } catch (\Exception $e) {
-            return $this->failServerError($e->getMessage());
         }
-    }
+
 }

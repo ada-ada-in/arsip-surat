@@ -56,7 +56,7 @@
 				<div class="row align-items-center">
 						<div class="col-md-12 col-lg-12" style="opacity: 0.9;">
 							<div class="login-box bg-white box-shadow border-radius-10 mx-auto">
-							<img style="margin-bottom: 40px; width: 80%;" class="d-block mx-auto"  src="/images/logo-bawaslu.png"/>
+							<img style="margin-bottom: 40px; width: 80%;" class="d-block mx-auto"  src="/images/sismas.png"/>
 							<div class="login-title" >
 								<h2 class="text-center text-danger">Login</h2>
 							</div>

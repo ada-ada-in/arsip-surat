@@ -87,6 +87,11 @@ class CreateTabelSurat extends Migration
                 'constraint' => ['masuk', 'keluar'],
                 'null'       => false,
             ],
+            'link_surat'       => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+                'null'       => true,
+            ],
             'created_at'  => [
                 'type'       => 'DATETIME',
                 'null'       => true,

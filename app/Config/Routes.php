@@ -122,11 +122,11 @@ $routes->group('api/v1', static function($routes) {
         $routes->get('arsip', 'api\v1\SuratController::getSuratArsipData', ['as' => 'api.user.getSuratArsipData']);
         $routes->get('arsip/user/(:num)', 'api\v1\SuratController::getSuratArsipUserData/$1', ['as' => 'api.user.getSuratArsipUserData']);
         $routes->get('masuk', 'api\v1\SuratController::getSuratMasukData', ['as' => 'api.user.getSuratMasukData']);
-        $routes->get('keluar', 'api\v1\SuratController::getSuratKeluarData', ['as' => 'api.user.getSuratKeluarData']);
+        $routes->get('keluar', 'api\v1\SuratController::getSuratKeluarData', ['as' => 'api.user.getSu   ratKeluarData']);
         $routes->get('masuk/user/(:num)', 'api\v1\SuratController::getSuratMasukByUserData/$1', ['as' => 'api.user.getSuratMasukByUserData']);
         $routes->get('keluar/user/(:num)', 'api\v1\SuratController::getSuratKeluarByUserData/$1', ['as' => 'api.user.getSuratKeluarByUserData']);
         $routes->get('(:num)', 'api\v1\SuratController::getSuratById/$1', ['as' => 'api.user.getSuratById']);
-        $routes->put('(:num)', 'api\v1\SuratController::updateSuratById/$1', ['as' => 'api.user.updateSuratById']);
+        $routes->post('(:num)', 'api\v1\SuratController::updateSuratById/$1', ['as' => 'api.user.updateSuratById']);
         $routes->delete('(:num)', 'api\v1\SuratController::deleteSurat/$1', ['as' => 'api.user.deleteSurat']);
     });
 

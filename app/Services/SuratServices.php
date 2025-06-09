@@ -34,6 +34,10 @@ class SuratServices {
                 'label' => 'Nomor Agenda',
                 'rules' => 'required'
             ],
+            'link_surat' => [
+                'label' => 'Link Surat',
+                'rules' => 'required'
+            ],
             'tipe_surat' => [
                 'label' => 'Tipe Surat',
                 'rules' => 'required|in_list[masuk, keluar]'
@@ -557,6 +561,13 @@ class SuratServices {
         $this->suratmodel->update($id, $data);
 
         $updatedData = $this->suratmodel->find($id);
+
+        if (!$updatedData) {
+        return [
+            'status' => false,
+            'message' => 'Failed to update data.'
+        ];
+}
 
         return [
             'status' => true,

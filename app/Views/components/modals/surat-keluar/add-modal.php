@@ -44,6 +44,9 @@
                             <div class="col-12 mt-3">
                                 <input type="text" class="form-control" name="dari" placeholder="Dari" required>
                             </div>
+                            <div class="col-12 mt-3">
+                                <input type="file" class="form-control" name="link_surat" placeholder="file" required>
+                            </div>
                             <input type="text" class="form-control" name="tipe_surat" value="keluar" hidden required>
                         </div>
                         <!-- Submit button inside the form now -->

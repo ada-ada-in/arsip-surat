@@ -40,6 +40,7 @@
                             <th>Nomor Surat</th>
                             <th>Perihal</th>
                             <th>Nomor Agenda</th>
+                            <th>File Surat</th>
                             <th>Jenis Surat</th>
                             <th>Tanggal Dibuat</th>
                             <th class="datatable-nosort">Action</th>
@@ -79,6 +80,13 @@
                         <td>${item.nomor_surat}</td>
                         <td>${item.perihal}</td>
                         <td>${item.nomor_agenda}</td>
+                        <td>
+                            <a href="/${item.link_surat}"
+                                target="_blank"
+                                class="btn btn-sm btn-outline-primary">
+                                <i class="dw dw-download"></i> Lihat
+                            </a>
+                        </td>
                         <td>${item.nama_jenis_laporan}</td>
                         <td>${item.created_at}</td>
                         <td>
@@ -167,60 +175,37 @@
 
         // POST Data
 
-        $('#form-add').on('submit', function (e) {
+      
+
+             $('#form-add').on('submit', function (e) {
             e.preventDefault();
 
-            const form = this;
-            const formData = {
-                id_user: $(form).find('select[name="id_user"]').val(),
-                id_jenis: $(form).find('select[name="id_jenis"]').val(),
-                id_sifat: $(form).find('select[name="id_sifat"]').val(),
-                id_status: $(form).find('select[name="id_status"]').val(),
-                nomor_surat: $(form).find('input[name="nomor_surat"]').val(),
-                lampiran: $(form).find('input[name="lampiran"]').val(),
-                nomor_agenda: $(form).find('input[name="nomor_agenda"]').val(),
-                perihal: $(form).find('input[name="perihal"]').val(),
-                dari: $(form).find('input[name="dari"]').val(),
-                tipe_surat: $(form).find('input[name="tipe_surat"]').val()
-            };
-
-            console.log(formData);
-
+            const formDOM = this;                
+            const fd = new FormData(formDOM);
 
             $.ajax({
-                url: `/api/v1/surat`,
+                url: '/api/v1/surat',
                 type: 'POST',
-                dataType: 'json',
-                data: JSON.stringify(formData),
-                processData: false,
-                contentType: 'application/json',
-                success: function (response) {
-                    alert(response.message);
-                    $('#form-add')[0].reset();
+                data: fd,
+                processData: false, 
+                contentType: false, 
+                success: function (res) {
+                    alert(res.message);
+                    formDOM.reset();
                     loadData();
                     $('#addmodal').modal('hide');
                 },
-                error: function (xhr, status, error) {
+                error: function (xhr) {
+                    let msg = 'Terjadi kesalahan.';
                     try {
-                        const response = JSON.parse(xhr.responseText);
-                        let errorMessage = '';
-                        if (response.messages) {
-                            for (const key in response.messages) {
-                                errorMessage += `${response.messages[key]}\n`;
-                            }
-                        } else if (response.message) {
-                            errorMessage = response.message;
-                        } else {
-                            errorMessage = 'Terjadi kesalahan yang tidak diketahui.';
-                        }
-                        alert(errorMessage);
-                    } catch (e) {
-                        console.error('Gagal parse response error:', e);
-                        alert('Terjadi kesalahan saat memproses respons error.');
-                    }
+                        const r = JSON.parse(xhr.responseText);
+                        if (r.messages) msg = Object.values(r.messages).join('\n');
+                        else if (r.message) msg = r.message;
+                    } catch {}
+                    alert(msg);
                 }
             });
-        });
+    
 
         // Delete
 
@@ -277,31 +262,20 @@
             $('#editmodal').modal('show');
         });
 
-        $('#form-edit').on('submit', function (e) {
+         $('#form-edit').on('submit', function (e) {
             e.preventDefault();
 
             const form = this;
             const id = $(form).find('input[name="id"]').val();
-            const formData = {
-                id_user: $(form).find('select[name="id_user"]').val(),
-                id_jenis: $(form).find('select[name="id_jenis"]').val(),
-                id_sifat: $(form).find('select[name="id_sifat"]').val(),
-                id_status: $(form).find('select[name="id_status"]').val(),
-                nomor_surat: $(form).find('input[name="nomor_surat"]').val(),
-                lampiran: $(form).find('input[name="lampiran"]').val(),
-                nomor_agenda: $(form).find('input[name="nomor_agenda"]').val(),
-                perihal: $(form).find('input[name="perihal"]').val(),
-                dari: $(form).find('input[name="dari"]').val(),
-                tipe_surat: $(form).find('input[name="tipe_surat"]').val()
-            };
+            const formData = new FormData(form);
 
             $.ajax({
                 url: `/api/v1/surat/${id}`,
-                type: 'PUT',
+                type: 'POST',
                 dataType: 'json',
-                data: JSON.stringify(formData),
+                data: formData,
                 processData: false,
-                contentType: 'application/json',
+                contentType: false,
                 success: function (response) {
                     alert(response.message);
                     $('#editmodal').modal('hide');
@@ -339,6 +313,7 @@
             displayPagination(filtered.length);
         });
     });
+})
 </script>
 
 
