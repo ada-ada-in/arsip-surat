@@ -257,7 +257,7 @@
                  
                     $.ajax({
                         url: `/api/v1/surat/${id}`,
-                        type: 'PUT',
+                        type: 'POST',
                         contentType: 'application/json',
                         data: JSON.stringify({
                             is_completed: "1",
@@ -365,7 +365,7 @@
 
         $.ajax({
             url: `/api/v1/surat/${id}`,
-            type: 'PUT',
+            type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
                 id_disposisi_kepada: disposisiKepada,

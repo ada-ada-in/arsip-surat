@@ -113,11 +113,11 @@
             $('#pagination').html(paginationButtons);
         }
 
-        $(document).on('click', '#pagination button', function () {
-            currentPage = parseInt($(this).data('page'));
-            displayTable(filteredData);
-            displayPagination(filteredData.length);
-        });
+        // Hentikan bubbling khusus pada link di dalam tabel
+            $('#data-disposisi').on('click', 'a', function (e) {
+                e.stopPropagation();
+            });
+
 
         // Fetch Data
 

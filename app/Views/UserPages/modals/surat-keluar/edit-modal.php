@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title fs-5" id="staticBackdropLabel">Ubah Surat Masuk</h1>
+                <h3 class="modal-title fs-5" id="staticBackdropLabel">Ubah Surat Keluar</h1>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -41,7 +41,7 @@
                                 <input type="text" class="form-control" name="dari" placeholder="Dari" required>
                             </div>
                             <div class="col-12 mt-3">
-                                <input type="file" class="form-control" name="link_surat" placeholder="file" required>
+                                <input type="file" class="form-control" name="link_surat" placeholder="file" >
                             </div>
                             <input type="text" class="form-control" name="tipe_surat" value="keluar" hidden required>
                         </div>

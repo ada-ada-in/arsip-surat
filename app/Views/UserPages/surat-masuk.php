@@ -70,7 +70,7 @@
 
             let row = '';
             paginatedItems.forEach((item, i) => {
-                row += `
+            row += `
                     <tr>
                         <td class="table-plus">${start + i + 1}</td>
                         <td>${item.nomor_surat}</td>
@@ -104,9 +104,9 @@
                                         data-dari="${item.dari}">
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
-                                    <button class="dropdown-item btn-delete" data-id="${item.id}">
+                                    <!-- <button class="dropdown-item btn-delete" data-id="${item.id}">
                                         <i class="dw dw-delete-3"></i> Delete
-                                    </button>
+                                    </button> -->
                                 </div>
                             </div>
                         </td>
@@ -143,16 +143,14 @@
 
         // Fetch Data
 
-        const id = localStorage.getItem('id') || '';
-
         function loadData() {
+            const id = localStorage.getItem('id'); 
             $.ajax({
-                url: `/api/v1/surat/masuk/user/${id}`,
+                url: '/api/v1/surat/masuk/user/' + id,
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
                         let data = response.data;
-						console.log(data);
 
                         if (!Array.isArray(data)) {
                             data = [data]; 
@@ -170,47 +168,18 @@
 
         loadData();
 
-        // POST Data
 
-         $('#form-add').on('submit', function (e) {
-            e.preventDefault();
-
-            const formDOM = this;                
-            const fd = new FormData(formDOM);
-
-            $.ajax({
-                url: '/api/v1/surat',
-                type: 'POST',
-                data: fd,
-                processData: false, 
-                contentType: false, 
-                success: function (res) {
-                    alert(res.message);
-                    formDOM.reset();
-                    loadData();
-                    $('#addmodal').modal('hide');
-                },
-                error: function (xhr) {
-                    let msg = 'Terjadi kesalahan.';
-                    try {
-                        const r = JSON.parse(xhr.responseText);
-                        if (r.messages) msg = Object.values(r.messages).join('\n');
-                        else if (r.message) msg = r.message;
-                    } catch {}
-                    alert(msg);
-                }
-            });
 
         // Delete
 
         $(document).on('click', '.btn-delete', function () {
             const id = $(this).data('id');
-            if (confirm('Apakah kamu yakin ingin surat ini?')) {
+            if (confirm('Apakah kamu yakin ingin menghapus suratini?')) {
                 $.ajax({
                     url: `/api/v1/surat/${id}`,
                     type: 'DELETE',
                     success: function () {
-                        alert('Surat pentujuk berhasil dihapus!');
+                        alert('Surat berhasil dihapus!');
                         loadData(); 
                     },
                     error: function (xhr, status, error) {
@@ -238,7 +207,6 @@
             }
         });
 
-        // Update
 
         $(document).on('click', '.btn-edit', function () {
             const button = $(this);
@@ -250,6 +218,7 @@
             $('#editmodal input[name="dari"]').val(button.data('dari'));
             $('#editmodal select[name="id_user"]').val(button.data('user'));
             $('#editmodal select[name="id_jenis"]').val(button.data('jenis'));
+            $('#editmodal select[name="is_completed"]').val(button.data('iscompleted'));
             $('#editmodal select[name="id_sifat"]').val(button.data('sifat'));
             $('#editmodal select[name="id_status"]').val(button.data('status'));
             $('#editmodal').modal('show');
@@ -260,15 +229,27 @@
 
             const form = this;
             const id = $(form).find('input[name="id"]').val();
-            const formData = new FormData(form);
+            const formData = {
+                id_user: $(form).find('select[name="id_user"]').val(),
+                id_jenis: $(form).find('select[name="id_jenis"]').val(),
+                id_sifat: $(form).find('select[name="id_sifat"]').val(),
+                id_status: $(form).find('select[name="id_status"]').val(),
+                nomor_surat: $(form).find('input[name="nomor_surat"]').val(),
+                lampiran: $(form).find('input[name="lampiran"]').val(),
+                nomor_agenda: $(form).find('input[name="nomor_agenda"]').val(),
+                perihal: $(form).find('input[name="perihal"]').val(),
+                dari: $(form).find('input[name="dari"]').val(),
+                is_completed: $(form).find('select[name="is_completed"]').val(),
+                tipe_surat: $(form).find('input[name="tipe_surat"]').val()
+            };
 
             $.ajax({
                 url: `/api/v1/surat/${id}`,
                 type: 'POST',
                 dataType: 'json',
-                data: formData,
+                data: JSON.stringify(formData),
                 processData: false,
-                contentType: false,
+                contentType: 'application/json',
                 success: function (response) {
                     alert(response.message);
                     $('#editmodal').modal('hide');
@@ -295,23 +276,27 @@
             });
         });
 
-        $('#searchinput').on('input', function () {
-            const keyword = $(this).val().toLowerCase();
-            const filtered = filteredData.filter(item =>
-                item.user_email.toLowerCase().includes(keyword) ||
-                item.user_name.toLowerCase().includes(keyword) ||
-                item.nomor_surat.toLowerCase().includes(keyword) ||
-                item.perihal.toLowerCase().includes(keyword) ||
-                item.nomor_agenda.toLowerCase().includes(keyword) ||
-                item.nama_jenis_laporan.toLowerCase().includes(keyword)
-            );
 
-            currentPage = 1; // reset to first page
-            displayTable(filtered);
-            displayPagination(filtered.length);
-        });
+
+    $('#searchinput').on('input', function () {
+        const keyword = $(this).val().toLowerCase();
+        const filtered = filteredData.filter(item =>
+            item.nomor_surat.toLowerCase().includes(keyword) ||
+            item.user_name.toLowerCase().includes(keyword) ||
+            item.tipe_surat.toLowerCase().includes(keyword) ||
+            item.created_at.toLowerCase().includes(keyword) 
+        );
+
+        currentPage = 1; // reset to first page
+        displayTable(filtered);
+        displayPagination(filtered.length);
     });
-})
+
+
+
+            
+
+    });
 </script>
 
 

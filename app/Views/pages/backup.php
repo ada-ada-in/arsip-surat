@@ -59,7 +59,7 @@
                             response.log_files.forEach((item, index) => {
                                 div += `
                                     <div class="mb-2 border rounded p-3 bg-light backup-item">
-                                        <strong class="backup-filename">${index + 1}. ${item.filename}</strong><br>
+                                        <strong class="backup-filename">${index + 1}. ${item.folder}</strong><br>
                                         Ukuran: ${item.size_kb} KB<br>
                                         Dibuat: ${item.created_at}<br>
                                         <a href="/api/v1/backup/download/${item.download_url}" class="btn btn-sm btn-success mt-2" target="_blank">

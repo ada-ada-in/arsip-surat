@@ -90,9 +90,9 @@
                                         data-id="${item.id}" data-user="${item.id_user}" data-nomorsurat="${item.nomor_surat}" data-lampiran="${item.lampiran}"  data-iscompleted="${item.is_completed}" data-jenis="${item.id_jenis}" data-sifat="${item.id_sifat}" data-status="${item.id_sifat}" data-nomoragenda="${item.nomor_agenda}" data-perihal="${item.perihal}" data-dari="${item.dari}">
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
-                                    <button class="dropdown-item btn-delete" data-id="${item.id}">
-                                        <i class="dw dw-delete-3"></i> Delete
-                                    </button>
+                                   <!--  <button class="dropdown-item btn-delete" data-id="${item.id}">
+                                       <i class="dw dw-delete-3"></i> Delete
+                                    </button> -->
                                 </div>
                             </div>
                         </td>

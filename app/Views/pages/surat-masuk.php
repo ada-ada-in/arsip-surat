@@ -108,10 +108,10 @@
                                         data-dari="${item.dari}">
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
-                                    <button class="dropdown-item btn-delete" data-id="${item.id}">
+                                    <!-- <button class="dropdown-item btn-delete" data-id="${item.id}">
                                         <i class="dw dw-delete-3"></i> Delete
-                                    </button>
-                                </div>
+                                    </button> -->
+                                 </div>
                             </div>
                         </td>
                     </tr>

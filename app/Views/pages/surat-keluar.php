@@ -108,9 +108,9 @@
                                         data-dari="${item.dari}">
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
-                                    <button class="dropdown-item btn-delete" data-id="${item.id}">
+                                   <!-- <button class="dropdown-item btn-delete" data-id="${item.id}">
                                         <i class="dw dw-delete-3"></i> Delete
-                                    </button>
+                                    </button> -->
                                 </div>
                             </div>
                         </td>
@@ -175,9 +175,7 @@
 
         // POST Data
 
-      
-
-             $('#form-add').on('submit', function (e) {
+        $('#form-add').on('submit', function (e) {
             e.preventDefault();
 
             const formDOM = this;                
@@ -205,7 +203,7 @@
                     alert(msg);
                 }
             });
-    
+        });
 
         // Delete
 
@@ -262,7 +260,7 @@
             $('#editmodal').modal('show');
         });
 
-         $('#form-edit').on('submit', function (e) {
+        $('#form-edit').on('submit', function (e) {
             e.preventDefault();
 
             const form = this;
@@ -302,10 +300,16 @@
             });
         });
 
+
         $('#searchinput').on('input', function () {
             const keyword = $(this).val().toLowerCase();
             const filtered = filteredData.filter(item =>
-                item.nama_disposisi_kepada.toLowerCase().includes(keyword)
+                item.user_email.toLowerCase().includes(keyword) ||
+                item.user_name.toLowerCase().includes(keyword) ||
+                item.nomor_surat.toLowerCase().includes(keyword) ||
+                item.perihal.toLowerCase().includes(keyword) ||
+                item.nomor_agenda.toLowerCase().includes(keyword) ||
+                item.nama_jenis_laporan.toLowerCase().includes(keyword)
             );
 
             currentPage = 1; // reset to first page
@@ -313,7 +317,6 @@
             displayPagination(filtered.length);
         });
     });
-})
 </script>
 
 

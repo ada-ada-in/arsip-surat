@@ -37,6 +37,7 @@
                             <th>Nomor Surat</th>
                             <th>Nama Pengirim</th>
                             <th>Kategori</th>
+                            <th>File Surat</th>
                             <th>Tanggal</th>
                             <th class="datatable-nosort">Action</th>
                         </tr>
@@ -75,6 +76,13 @@
                             <span class="badge ${item.tipe_surat == 'masuk' ? 'bg-primary' : 'bg-warning'} text-white fw-bold">
                                 ${item.tipe_surat}
                             </span>
+                        </td>
+                        <td>
+                            <a href="/${item.link_surat}"
+                                target="_blank"
+                                class="btn btn-sm btn-outline-primary">
+                                <i class="dw dw-download"></i> Lihat
+                            </a>
                         </td>
                         <td>${item.created_at}</td> 
                         <td>
@@ -209,32 +217,20 @@
             $('#editmodal').modal('show');
         });
 
-        $('#form-edit').on('submit', function (e) {
+       $('#form-edit').on('submit', function (e) {
             e.preventDefault();
 
             const form = this;
             const id = $(form).find('input[name="id"]').val();
-            const formData = {
-                id_user: $(form).find('select[name="id_user"]').val(),
-                id_jenis: $(form).find('select[name="id_jenis"]').val(),
-                id_sifat: $(form).find('select[name="id_sifat"]').val(),
-                id_status: $(form).find('select[name="id_status"]').val(),
-                nomor_surat: $(form).find('input[name="nomor_surat"]').val(),
-                lampiran: $(form).find('input[name="lampiran"]').val(),
-                nomor_agenda: $(form).find('input[name="nomor_agenda"]').val(),
-                perihal: $(form).find('input[name="perihal"]').val(),
-                dari: $(form).find('input[name="dari"]').val(),
-                is_completed: $(form).find('select[name="is_completed"]').val(),
-                tipe_surat: $(form).find('input[name="tipe_surat"]').val()
-            };
+            const formData = new FormData(form);
 
             $.ajax({
                 url: `/api/v1/surat/${id}`,
-                type: 'PUT',
+                type: 'POST',
                 dataType: 'json',
-                data: JSON.stringify(formData),
+                data: formData,
                 processData: false,
-                contentType: 'application/json',
+                contentType: false,
                 success: function (response) {
                     alert(response.message);
                     $('#editmodal').modal('hide');
