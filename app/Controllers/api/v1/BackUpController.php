@@ -3,6 +3,11 @@
 namespace App\Controllers\Api\V1;
 
 use CodeIgniter\RESTful\ResourceController;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
+use ZipStream\ZipStream;
+use ZipStream\Option;
+
 
 class BackUpController extends ResourceController
 {
@@ -146,8 +151,7 @@ class BackUpController extends ResourceController
             'sql_file'     => 'backup_arsip_db.sql',
             'size_kb'      => $sqlSize,
             'created_at'   => date('Y-m-d H:i:s', filemtime($folderPath)),
-            'download_url' => "backup/{$folder}/backup_arsip_db.sql"
-        ];
+            'download_url' => "{$folder}"        ];
     }
 
     return $this->respond([
@@ -158,25 +162,40 @@ class BackUpController extends ResourceController
 
 
 
-    public function download($filename)
+
+
+        public function download($folderName)
         {
-            $path = WRITEPATH . 'backups/' . $filename;
+            $backupFolder = WRITEPATH . 'backups/' . $folderName;
 
-            if (!file_exists($path)) {
-                return $this->failNotFound('File not found.');
+            if (!is_dir($backupFolder)) {
+                return $this->failNotFound('Folder backup tidak ditemukan.');
             }
 
-            if (!str_ends_with($filename, '.sql')) {
-                $filename .= '.sql';
-            }
-            
+            // Nama file ZIP yang akan muncul di browser
+            $zipFileName = $folderName . '.zip';
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . $zipFileName  .  '"');
+            header('Pragma: no-cache');
+            header('Expires: 0');
 
-            return $this->response
-                ->download($path, null)
-                ->setFileName($filename);
+            // Inisialisasi ZipStream (langsung ke output browser)
+            $zip = new ZipStream();
+
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($backupFolder, \RecursiveDirectoryIterator::SKIP_DOTS)
+            );
+
+            foreach ($files as $file) {
+                $filePath = $file->getRealPath();
+                $relativePath = substr($filePath, strlen($backupFolder) + 1);
+
+                // Tambahkan file ke zip stream (langsung dikirim)
+                $zip->addFileFromPath($relativePath, $filePath);
+            }
+
+            $zip->finish(); // Penting agar file selesai dikirim
+            exit;
         }
-
-
-
 
 }
