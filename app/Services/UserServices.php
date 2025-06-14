@@ -2,13 +2,18 @@
 namespace App\Services;
 
 use App\Models\UserModels;
+use CodeIgniter\Encryption\Encryption;
+
 
 class UserServices {
     protected $userModel;
+    protected $encryption;
+
 
     public function __construct()
     {
         $this->userModel = new UserModels();
+        $this->encryption = \Config\Services::encryption();
     }
 
     public function addUserServices(array $data)
@@ -181,10 +186,6 @@ public function updateUserByIdServices($id, array $data)
             'label' => 'Handphone',
             'rules' => 'required|is_unique[users.handphone,id,' . $id . ']'
         ],
-        'role' => [
-            'label' => 'Role',
-            'rules' => 'required|in_list[super_admin,admin,user]'
-        ]
     ];
 
     if (!empty($data['password'])) {
@@ -216,6 +217,10 @@ public function updateUserByIdServices($id, array $data)
 
     $this->userModel->update($id, $data);
     $updatedData = $this->userModel->find($id);
+
+     session()->destroy();
+
+
 
     return [
         'status' => true,

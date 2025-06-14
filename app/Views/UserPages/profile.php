@@ -52,12 +52,12 @@
 
                                             <div class="form-group">
                                                 <label>Password</label>
-                                                <input class="form-control form-control-lg" type="password" name="password" id="password" />
+                                                <input class="form-control form-control-lg" type="password" name="password" id="password" required />
                                             </div>
 
                                             <div class="form-group">
                                                 <label>Confirm Password</label>
-                                                <input class="form-control form-control-lg" type="password" name="confirm_password" id="confirm_password" />
+                                                <input class="form-control form-control-lg" type="password" name="confirm_password" id="confirm_password" required />
                                             </div>
 
                                             <div class="form-group mb-0">
@@ -85,6 +85,7 @@
                     dataType: 'json',
                     success: function (response) {
                         const data = response.data;
+                        console.log('User data fetched successfully:', data);
                         $('#instansi').val(data.name || '');
                         $('#email').val(data.email || '');
                         $('#handphone').val(data.handphone || '');
@@ -118,6 +119,7 @@
                     data: JSON.stringify(formData),
                     success: function (response) {
                         alert('Profile updated successfully');
+                        window.location.href = '/auth/login';
                     },
                     error: function (xhr, status, error) {
                         console.error('Error updating profile:', xhr.responseText);
