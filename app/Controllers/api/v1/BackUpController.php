@@ -58,7 +58,17 @@ class BackUpController extends ResourceController
     public function backup()
     {
         $db = \Config\Database::connect();
-        $tables = $db->listTables();
+        $tableOrder = [
+            'users',
+            'jenis_laporan',
+            'sifat_laporan',
+            'status_laporan',
+            'disposisi_kepada',
+            'disposisi_petunjuk',
+            'surat',
+            'migrations'
+        ];
+        $tables = $tableOrder;
         $sql = "";
 
         // Buat folder backup berdasarkan waktu
