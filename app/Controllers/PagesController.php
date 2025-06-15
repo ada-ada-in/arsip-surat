@@ -99,6 +99,14 @@ class PagesController extends BaseController
     {
         return view('userPages/print');
     }
+        public function userDisposisi(): string 
+    {
+        return view('userPages/disposisi');
+    }
+        public function userLihatDisposisi(): string 
+    {
+        return view('userPages/lihatdisposisi');
+    }
     
 
 

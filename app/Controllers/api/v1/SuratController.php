@@ -91,6 +91,21 @@ class SuratController extends ResourceController
         }
     }
 
+    public function getUserSuratData()
+    {
+        try {
+            $result = $this->suratServices->getUserSuratDataServices();
+
+            return $this->respond([
+                'status' => true,
+                'data' => $result['data'] ?? [],
+                'message' => $result['message'] ?? 'Data retrieved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
     public function getSuratMasukData()
     {
         try {

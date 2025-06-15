@@ -28,6 +28,12 @@
 							</a>
 						</li>
 						<li class="dropdown">
+							<a href="<?= base_url('user/disposisi') ?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-file-earmark-text"></span
+								><span class="mtext">Disposisi</span>
+							</a>
+						</li>
+						<li class="dropdown">
 							<a href="javascript:;" class="dropdown-toggle">
 								<span class="micon bi bi-file-earmark-text"></span
 								><span class="mtext">Surat</span>

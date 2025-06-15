@@ -104,9 +104,9 @@
                                         data-dari="${item.dari}">
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
-                                    <!-- <button class="dropdown-item btn-delete" data-id="${item.id}">
+                                    <button class="dropdown-item btn-delete" data-id="${item.id}">
                                         <i class="dw dw-delete-3"></i> Delete
-                                    </button> -->
+                                    </button>
                                 </div>
                             </div>
                         </td>
@@ -205,6 +205,38 @@
                     }
                 });
             }
+        });
+
+
+            $('#form-add').on('submit', function (e) {
+            e.preventDefault();
+
+            const form = this;
+            const formData = new FormData(form);
+
+            formData.append('id_user', localStorage.getItem('id'));
+            $.ajax({
+                url: '/api/v1/surat',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    alert(res.message);
+                    form.reset();
+                    loadData();
+                    $('#addmodal').modal('hide');
+                },
+                error: function (xhr) {
+                    let msg = 'Terjadi kesalahan.';
+                    try {
+                        const r = JSON.parse(xhr.responseText);
+                        if (r.messages) msg = Object.values(r.messages).join('\n');
+                        else if (r.message) msg = r.message;
+                    } catch {}
+                    alert(msg);
+                }
+            });
         });
 
 

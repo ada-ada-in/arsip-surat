@@ -1,4 +1,4 @@
-<?= $this->extend('layouth/admin_layout') ?>
+<?= $this->extend('layouth/user_layout') ?>
 <?= $this->section('content') ?>
 
 <div class="pd-ltr-20 xs-pd-20-10">
@@ -12,7 +12,7 @@
                                 <nav aria-label="breadcrumb" role="navigation">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="<?= url_to('admin') ?>">Dashboard</a>
+                                            <a href="<?= base_url('user/dashboard') ?>">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
                                             Disposisi
@@ -75,7 +75,7 @@
 						style="cursor: pointer; transition: background-color 0.2s ease;" 
 						onmouseover="this.style.backgroundColor='#f2f2f2'" 
 						onmouseout="this.style.backgroundColor=''" 
-						onclick="window.location.href='/admin/disposisi/isidisposisi?id=${item.id}'">
+						onclick="window.location.href='/user/lihatdisposisi?id=${item.id}'">
                         <td class="table-plus">${start + i + 1}</td>
                         <td>${item.user_name}</td>
                         <td>${item.user_email}</td>
@@ -98,7 +98,7 @@
 
         // Paginasi
 
-        function displayPagination(totalItems) {
+       function displayPagination(totalItems) {
             const totalPages = Math.ceil(totalItems / rowsPerPage);
             let paginationButtons = '';
 
@@ -120,8 +120,6 @@
         });
 
 
-        
-
         // Hentikan bubbling khusus pada link di dalam tabel
             $('#data-disposisi').on('click', 'a', function (e) {
                 e.stopPropagation();
@@ -132,7 +130,7 @@
 
         function loadData() {
             $.ajax({
-                url: '/api/v1/surat',
+                url: '/api/v1/surat/user',
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {

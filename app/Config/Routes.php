@@ -15,6 +15,8 @@ $routes->group('user', static function($routes) {
     $routes->get('arsip', 'PagesController::userArsip', ['as' => 'userArsip']);
     $routes->get('disposisi/print', 'PagesController::userPrint', ['as' => 'userPrint']); 
     $routes->get('profile', 'PagesController::userProfile', ['as' => 'userProfile']); 
+    $routes->get('disposisi', 'PagesController::userDisposisi', ['as' => 'userDisposisi']); 
+    $routes->get('lihatdisposisi', 'PagesController::userLihatDisposisi', ['as' => 'userLihatDisposisi']); 
 });     
 
 
@@ -111,6 +113,7 @@ $routes->group('api/v1', static function($routes) {
     $routes->group('surat', static function($routes) {
         $routes->post('', 'api\v1\SuratController::addSurat', ['as' => 'api.user.addSurat']);
         $routes->get('', 'api\v1\SuratController::getSuratData', ['as' => 'api.user.getSuratData']);
+        $routes->get('user', 'api\v1\SuratController::getUserSuratData', ['as' => 'api.user.getUserSuratData']);
         $routes->get('all', 'api\v1\SuratController::getAllSuratArsipData', ['as' => 'api.user.getAllSuratArsipData']);
         $routes->get('notification', 'api\v1\SuratController::getSuratNotificationData', ['as' => 'api.user.getSuratNotificationData ']);
         $routes->get('count', 'api\v1\SuratController::countSuratData', ['as' => 'api.user.countSuratData ']);

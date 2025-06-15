@@ -39,7 +39,7 @@
                             <th>Email</th>
                             <th>Handphone</th>
                             <th>Role</th>
-                            <th>Status</th>
+                            <!-- <th>Status</th> -->
                             <th class="datatable-nosort">Action</th>
                         </tr>
                     </thead>
@@ -75,12 +75,12 @@
                         <td>${item.name}</td>
                         <td>${item.email}</td>
                         <td>${item.handphone}</td>
-                        <td>${item.role}</td>
-                        <td>
+                        <td>${item.role}
+                        <!-- <td>
                             <span class="badge ${item.is_active == 1 ? 'bg-success' : 'bg-secondary'} text-white fw-bold">
                                 ${item.is_active == 1 ? 'Aktif' : 'Tidak Aktif'}
                             </span>
-                        </td>
+                        </td> -->
                         <td>
                             <div class="dropdown">
                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">

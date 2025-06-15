@@ -22,11 +22,18 @@
     size: A4; /* Ukuran kertas A4 */
     margin: 10mm;
   }
+    header, nav, footer, .no-print {
+    display: none !important;
+  }
+  title::before {
+    content: '';
+  }
   body {
     width: 100% !important;
     height: auto !important;
     font-size: 12pt;
   }
+  
   .card-box {
     height: auto !important;
     page-break-after: always; /* Memastikan konten di halaman baru */

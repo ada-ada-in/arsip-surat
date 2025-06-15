@@ -1,4 +1,4 @@
-<?= $this->extend('layouth/admin_layout') ?>
+<?= $this->extend('layouth/user_layout') ?>
 <?= $this->section('content') ?>
 
 <div class="pd-ltr-20 xs-pd-20-10">
@@ -7,24 +7,18 @@
             <div class="row d-flex justify-content-between">
                 <div class="col-md-6 col-sm-12">
                     <div class="title">
-                        <h4>Isi Disposisi</h4>
+                        <h4>Lihat Disposisi</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="<?= url_to('admin') ?>">Disposisi</a>
+                                <a href="<?= base_url('user/dashboard') ?>">Disposisi</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Isi Disposisi
+                                Lihat Disposisi
                             </li>
                         </ol>   
                     </nav>
-                </div>
-                <div class="col-md-6 col-sm-12  d-flex justify-content-end align-items-start"">
-                <div id="complete" class="btnComplete">
-                </div>
-                <div id="cetak"></div>
-                <button class="btn btn-primary" id="btnSimpan" type="submit">Simpan</button>
                 </div>
             </div>
         </div>
@@ -64,7 +58,7 @@
                         <div class="m-2">
                             <div class="d-flex align-items-center mb-2">
                                 <label for="diterima" class="me-2 fw-bold" style="min-width: 80px;">Di Terima:</label>
-                                <input type="date" id="diterima" name="diterima" class="form-control w-50 mx-3" required>
+                                <input type="date" id="diterima" name="diterima" class="form-control w-50 mx-3" disabled>
                             </div>
                             <p id="noAgenda" class="mb-0">No. Agenda :</p>
                         </div>
@@ -87,13 +81,13 @@
                 <!-- Disposisi dan Petunjuk -->
                 <div class="row border border-dark">
                     <div class="col-6 p-4">
-                        <p>Disposisi Kepada</p>
-                        <div id="disposisikepada">
+                        <p >Disposisi Kepada :</p>
+                        <div  id="disposisikepada">
                             <!-- checkbox disposisi kepada -->
                         </div>
                     </div>
                     <div class="col-6 p-4">
-                        <p>Petunjuk Disposisi</p>
+                        <p>Petunjuk Disposisi :</p>
                         <div id="disposisipetunjuk">
                            <!-- checkbox disposisi petunjuk -->
                         </div>
@@ -214,7 +208,7 @@
                                         data-nama="${item.nama_disposisi_kepada}"
                                         data-kordinator="${item.nama_kordinator}"
                                         data-nip="${item.nip}"
-                                        data-created_at="${item.created_at}" ${isChecked}>
+                                        data-created_at="${item.created_at}" ${isChecked} disabled>
                                     ${item.nama_disposisi_kepada}
                                 </p>
                             `;
@@ -296,7 +290,7 @@
 
                             div += `
                                 <p>
-                                    <input type="radio" name="disposisi_petunjuk" value="${item.id}" ${isChecked}>
+                                    <input type="radio" name="disposisi_petunjuk" value="${item.id}" ${isChecked} disabled>
                                     ${item.nama_disposisi_petunjuk}
                                 </p>
                             `;
