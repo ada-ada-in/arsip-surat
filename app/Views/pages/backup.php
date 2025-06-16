@@ -111,6 +111,23 @@
                     });
                 });
 
+                 // Refresh setiap satu minggu detik
+                setInterval(() => {
+                   $.ajax({
+                        url: '/api/v1/backup',
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function () {
+                            loadBackupList();
+                        },
+                        error: function (error) {
+                            console.error('Gagal melakukan refresh backup:', error);
+                        }
+                    });
+                }, 604800000); // 604800000 ms = 1 minggu
+                // 1000 ms = 1 detik
+                //604800000 ms =  604.800 detik = 1 minggu
+
             </script>
 
 

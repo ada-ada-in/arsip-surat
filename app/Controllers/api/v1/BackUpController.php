@@ -11,48 +11,6 @@ use ZipStream\Option;
 
 class BackUpController extends ResourceController
 {
-    // public function backup()
-    // {
-    //     $db = \Config\Database::connect();
-    //     $tables = $db->listTables();
-    //     $sql = "";
-
-    //     foreach ($tables as $table) {
-    //         // Struktur tabel
-    //         $query = $db->query("SHOW CREATE TABLE `$table`")->getRowArray();
-    //         $sql .= "\n\n" . $query['Create Table'] . ";\n\n";
-
-    //         // Data isi tabel
-    //         $builder = $db->table($table);
-    //         $data = $builder->get()->getResultArray();
-
-    //         foreach ($data as $row) {
-    //             $columns = array_map(function($col) {
-    //                 return "`$col`";
-    //             }, array_keys($row));
-
-    //             $values = array_map(function($val) use ($db) {
-    //                 if (is_null($val)) {
-    //                     return "NULL";
-    //                 } else {
-    //                     return "'" . $db->escapeString((string) $val) . "'";
-    //                 }
-    //             }, array_values($row));
-
-    //             $sql .= "INSERT INTO `$table` (" . implode(", ", $columns) . ") VALUES (" . implode(", ", $values) . ");\n";
-    //         }
-    //     }
-
-    //     // Simpan ke file
-    //     $filename = WRITEPATH . 'backups/backup_arsip_db' . date('Ymd_His') . '.sql';
-    //     file_put_contents($filename, $sql);
-
-    //     return $this->respond([
-    //         'status' => 'success',
-    //         'message' => 'Backup berhasil tanpa mysqldump.',
-    //         'file' => $filename
-    //     ]);
-    // }
 
 
     public function backup()
