@@ -20,6 +20,10 @@
                         </ol>   
                     </nav>
                 </div>
+                <div class="col-md-6 col-sm-12  d-flex justify-content-end align-items-start"">
+                <div id="cetak"></div>
+                <button class="btn btn-primary" id="btnSimpan" type="submit">Simpan</button>
+                </div>
             </div>
         </div>
 
@@ -58,7 +62,7 @@
                         <div class="m-2">
                             <div class="d-flex align-items-center mb-2">
                                 <label for="diterima" class="me-2 fw-bold" style="min-width: 80px;">Di Terima:</label>
-                                <input type="date" id="diterima" name="diterima" class="form-control w-50 mx-3" disabled>
+                                <input type="date" id="diterima" name="diterima" class="form-control w-50 mx-3" required>
                             </div>
                             <p id="noAgenda" class="mb-0">No. Agenda :</p>
                         </div>
@@ -102,6 +106,7 @@
                             <p id="ttd-nama">______________________</p>
                             <br><br><br>
                             <p class="fw-bold"  id="ttd-kordinator">__________________________</p>
+                            <hr style="width: 300px; border-color: #000;">
                             <p id="ttd-nip">NIP: ______________________</p>
                         </div>
                     </div>
@@ -158,7 +163,7 @@
 
                 cetak = 
                 `
-                <a class="btn btn-primary mx-4" href="/admin/disposisi/print?id=${id}" target="_blank">Cetak</a>
+                <a class="btn btn-primary mx-4" href="/user/disposisi/print?id=${id}" target="_blank">Cetak</a>
                 `
 
                 $('#cetak').html(cetak);
@@ -208,7 +213,7 @@
                                         data-nama="${item.nama_disposisi_kepada}"
                                         data-kordinator="${item.nama_kordinator}"
                                         data-nip="${item.nip}"
-                                        data-created_at="${item.created_at}" ${isChecked} disabled>
+                                        data-created_at="${item.created_at}" ${isChecked}>
                                     ${item.nama_disposisi_kepada}
                                 </p>
                             `;
@@ -290,7 +295,7 @@
 
                             div += `
                                 <p>
-                                    <input type="radio" name="disposisi_petunjuk" value="${item.id}" ${isChecked} disabled>
+                                    <input type="radio" name="disposisi_petunjuk" value="${item.id}" ${isChecked}>
                                     ${item.nama_disposisi_petunjuk}
                                 </p>
                             `;

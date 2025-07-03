@@ -130,6 +130,7 @@
                         <br>
                         <br>
                         <p class="fw-bold" id="ttd-kordinator">__________________________</p>
+                       <hr style="width: 300px; border-color: #000;">
                         <p style="margin-top: -15px;" id="ttd-nip">NIP: ______________________</p>
                     </div>
                 </div>

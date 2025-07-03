@@ -108,6 +108,7 @@
                             <p id="ttd-nama">______________________</p>
                             <br><br><br>
                             <p class="fw-bold"  id="ttd-kordinator">__________________________</p>
+                             <hr style="width: 300px; border-color: #000;">
                             <p id="ttd-nip">NIP: ______________________</p>
                         </div>
                     </div>

@@ -23,16 +23,11 @@
 						</li>
 					<li class="dropdown">
 							<a href="<?= base_url('user/arsip') ?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-file-earmark-text"></span
+								<span class="micon bi bi-textarea-resize"></span
 								><span class="mtext">Arsip</span>
 							</a>
 						</li>
-						<li class="dropdown">
-							<a href="<?= base_url('user/disposisi') ?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-file-earmark-text"></span
-								><span class="mtext">Disposisi</span>
-							</a>
-						</li>
+						
 						<li class="dropdown">
 							<a href="javascript:;" class="dropdown-toggle">
 								<span class="micon bi bi-file-earmark-text"></span
@@ -42,6 +37,13 @@
 								<li><a href="<?= base_url('user/surat-masuk') ?>">Surat Masuk</a></li>
 								<li><a href="<?= base_url('user/surat-keluar') ?>">Surat Keluar</a></li>
 							</ul>
+						</li>
+
+						<li class="dropdown">
+							<a href="<?= base_url('user/disposisi') ?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-table"></span
+								><span class="mtext">Disposisi</span>
+							</a>
 						</li>
 					</ul>
 				</div>
