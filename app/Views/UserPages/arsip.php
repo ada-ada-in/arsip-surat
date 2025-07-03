@@ -91,6 +91,9 @@
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                    <a  class="dropdown-item" href="/user/lihatdisposisi?id=${item.id}" target="_blank" >
+                                        <i class="micon bi bi-textarea-resize"></i> Disposisi
+                                    </a>
                                     <a  class="dropdown-item" href="/user/disposisi/print?id=${item.id}" target="_blank" >
                                         <i class="dw dw-file"></i> Download
                                     </a>

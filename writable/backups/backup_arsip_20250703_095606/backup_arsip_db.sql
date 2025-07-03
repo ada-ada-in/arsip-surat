@@ -23,8 +23,9 @@ CREATE TABLE `jenis_laporan` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `jenis_laporan` (`id`, `nama_jenis_laporan`, `created_at`, `updated_at`) VALUES ('1', 'Sangat Segera', '2025-06-25 06:45:45', '2025-06-25 06:45:45');
 
 
 CREATE TABLE `sifat_laporan` (
@@ -33,8 +34,9 @@ CREATE TABLE `sifat_laporan` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `sifat_laporan` (`id`, `nama_sifat_laporan`, `created_at`, `updated_at`) VALUES ('1', 'Sifat 1', '2025-06-25 06:45:54', '2025-06-25 06:45:54');
 
 
 CREATE TABLE `status_laporan` (
@@ -43,8 +45,9 @@ CREATE TABLE `status_laporan` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `status_laporan` (`id`, `nama_status_laporan`, `created_at`, `updated_at`) VALUES ('1', 'Status 1', '2025-06-25 06:46:00', '2025-06-25 06:46:00');
 
 
 CREATE TABLE `disposisi_kepada` (
@@ -55,8 +58,9 @@ CREATE TABLE `disposisi_kepada` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `disposisi_kepada` (`id`, `nama_kordinator`, `nip`, `nama_disposisi_kepada`, `created_at`, `updated_at`) VALUES ('1', 'Febriadi S.H', '1234567890', 'Ketua/Kordiv SDMO dan Diklat', '2025-06-25 06:46:11', '2025-06-25 06:46:11');
 
 
 CREATE TABLE `disposisi_petunjuk` (
@@ -65,8 +69,9 @@ CREATE TABLE `disposisi_petunjuk` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `disposisi_petunjuk` (`id`, `nama_disposisi_petunjuk`, `created_at`, `updated_at`) VALUES ('1', 'Dikaji dan di tindak lanjuti', '2025-06-25 06:46:24', '2025-06-25 06:46:24');
 
 
 CREATE TABLE `surat` (
@@ -101,8 +106,11 @@ CREATE TABLE `surat` (
   CONSTRAINT `surat_id_sifat_foreign` FOREIGN KEY (`id_sifat`) REFERENCES `sifat_laporan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `surat_id_status_foreign` FOREIGN KEY (`id_status`) REFERENCES `status_laporan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `surat_id_user_foreign` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `surat` (`id`, `id_user`, `id_jenis`, `id_sifat`, `id_status`, `id_disposisi_kepada`, `id_disposisi_petunjuk`, `perihal`, `nomor_surat`, `nomor_agenda`, `tanggal_diterima`, `is_completed`, `lampiran`, `dari`, `tipe_surat`, `link_surat`, `created_at`, `updated_at`) VALUES ('1', '1', '1', '1', '1', NULL, NULL, 'perihal', 'B-58/PM.01.02/K/JA/34', '-', '0000-00-00 00:00:00', '0', '-', 'Dari', 'masuk', 'uploads/surat/1750834004_cad7f54ddc78c5b60e2e.pdf', '2025-06-25 06:46:44', '2025-06-25 06:46:44');
+INSERT INTO `surat` (`id`, `id_user`, `id_jenis`, `id_sifat`, `id_status`, `id_disposisi_kepada`, `id_disposisi_petunjuk`, `perihal`, `nomor_surat`, `nomor_agenda`, `tanggal_diterima`, `is_completed`, `lampiran`, `dari`, `tipe_surat`, `link_surat`, `created_at`, `updated_at`) VALUES ('2', '2', '1', '1', '1', '1', '1', 'perihal', 'B-58/PM.01.02/K/JA/341', '123111', '2025-06-24 00:00:00', '0', '-', 'Dari', 'masuk', 'uploads/surat/1751533999_f30665324f2a94df45c5.pdf', '2025-06-25 07:39:17', '2025-07-03 09:29:13');
+INSERT INTO `surat` (`id`, `id_user`, `id_jenis`, `id_sifat`, `id_status`, `id_disposisi_kepada`, `id_disposisi_petunjuk`, `perihal`, `nomor_surat`, `nomor_agenda`, `tanggal_diterima`, `is_completed`, `lampiran`, `dari`, `tipe_surat`, `link_surat`, `created_at`, `updated_at`) VALUES ('3', '2', '1', '1', '1', NULL, NULL, 'perihal', 'B-58/PM.01.02/K/JA/3413', 'adwd', '0000-00-00 00:00:00', '0', '-', 'Dari', 'keluar', 'uploads/surat/1751536200_f24b534f3808df6605e2.pdf', '2025-07-03 09:50:01', '2025-07-03 09:50:01');
 
 
 CREATE TABLE `migrations` (
