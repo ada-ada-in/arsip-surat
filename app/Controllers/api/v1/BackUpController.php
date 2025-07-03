@@ -166,4 +166,49 @@ class BackUpController extends ResourceController
             exit;
         }
 
+       private function recursiveDelete($dir)
+            {
+                if (!is_dir($dir)) {
+                    return;
+                }
+
+                $files = scandir($dir);
+                foreach ($files as $file) {
+                    if ($file === '.' || $file === '..') {
+                        continue;
+                    }
+
+                    $filePath = $dir . DIRECTORY_SEPARATOR . $file;
+
+                    if (is_dir($filePath)) {
+                        $this->recursiveDelete($filePath);
+                    } elseif (is_file($filePath)) {
+                        if (!unlink($filePath)) {
+                            log_message('error', "Gagal menghapus file: $filePath");
+                        }
+                    }
+                }
+
+                if (!rmdir($dir)) {
+                    log_message('error', "Gagal menghapus folder: $dir");
+                }
+            }
+
+            public function deleteBackup($folderName)
+            {
+                $backupFolder = WRITEPATH . 'backups/' . $folderName;
+
+                if (!is_dir($backupFolder)) {
+                    return $this->failNotFound('Folder backup tidak ditemukan.');
+                }
+
+                $this->recursiveDelete($backupFolder);
+
+                return $this->respond([
+                    'status' => 'success',
+                    'message' => 'Backup berhasil dihapus.'
+                ]);
+            }
+
+
 }

@@ -136,6 +136,7 @@ $routes->group('api/v1', static function($routes) {
 
         $routes->group('backup', static function($routes) {
         $routes->post('', 'api\v1\BackUpController::backup', ['as' => 'api.user.backup']);
+        $routes->delete('(:any)', 'api\v1\BackUpController::deleteBackup/$1', ['as' => 'api.user.deleteBackup']);
         $routes->get('', 'api\v1\BackUpController::listBackups', ['as' => 'api.user.listBackups']);
         $routes->get('download/(:any)', 'api\v1\BackUpController::download/$1', ['as' => 'api.user.download']);
     });
